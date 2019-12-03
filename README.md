@@ -2,7 +2,7 @@
 
 
 
-This is Godot project of a recreation of the infamous Super Mario 64. It is _very much_ work in progress, so any code or resource contribution is welcome.
+This is Godot project of a recreation of the infamous Super Mario 64. More specifically, one of its levels, Hazy Maze Cave. It is _very much_ work in progress, so any code or resource contribution is welcome.
 
 
 
