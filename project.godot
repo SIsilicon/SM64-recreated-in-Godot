@@ -1,0 +1,193 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "State",
+"class": "AirState",
+"language": "GDScript",
+"path": "res://Mario/Air States/Air State.gd"
+}, {
+"base": "Spatial",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://Entities/Entity.gd"
+}, {
+"base": "State",
+"class": "GroundState",
+"language": "GDScript",
+"path": "res://Mario/Ground States/Ground State.gd"
+}, {
+"base": "Spatial",
+"class": "Mario",
+"language": "GDScript",
+"path": "res://Mario/Mario.gd"
+}, {
+"base": "AudioStreamPlayer3D",
+"class": "SoundParticle",
+"language": "GDScript",
+"path": "res://Sound Particle.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://Mario/State.gd"
+}, {
+"base": "GroundState",
+"class": "StationaryState",
+"language": "GDScript",
+"path": "res://Mario/Ground States/Stationary State.gd"
+}, {
+"base": "Resource",
+"class": "Surface",
+"language": "GDScript",
+"path": "res://Physics/Surface.gd"
+}, {
+"base": "State",
+"class": "WaterState",
+"language": "GDScript",
+"path": "res://Mario/Water States/Water State.gd"
+} ]
+_global_script_class_icons={
+"AirState": "",
+"Entity": "",
+"GroundState": "",
+"Mario": "",
+"SoundParticle": "",
+"State": "",
+"StationaryState": "",
+"Surface": "",
+"WaterState": ""
+}
+
+[application]
+
+config/name="Hazy Maze"
+run/main_scene="res://Test.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+Constants="*res://Misc/Constants.gd"
+Utils="*res://Misc/Utils.gd"
+Collisions="*res://Physics/Collisions.gd"
+Global="*res://Global.gd"
+UserData="*res://addons/github-integration/scripts/user_data.gd"
+
+[debug]
+
+settings/fps/force_fps=30
+
+[editor_plugins]
+
+enabled=PoolStringArray( "fsm", "water_pack" )
+
+[importer_defaults]
+
+wav={
+"compress/mode": 0,
+"edit/loop": false,
+"edit/normalize": true,
+"edit/trim": false,
+"force/8_bit": false,
+"force/max_rate": false,
+"force/max_rate_hz": 44100,
+"force/mono": false
+}
+
+[input]
+
+jump={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":88,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"unicode":0,"echo":false,"script":null)
+ ]
+}
+crouch={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+}
+analog={
+"deadzone": 0.5,
+"events": [  ]
+}
+off_floor={
+"deadzone": 0.5,
+"events": [  ]
+}
+cam_zoom_out={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_zoom_in={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
+ ]
+}
+punch={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":90,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+3d_physics/layer_1="Static Surface"
+3d_physics/layer_2="Dynamic Surface"
+3d_physics/layer_3="Mario"
+3d_physics/layer_4="Entity"
+3d_physics/layer_5="Camera Collision"
+3d_physics/layer_7="Water"
+
+[physics]
+
+common/physics_fps=30
+3d/water_linear_damp=1.0
+3d/water_angular_damp=1.0
+
+[rendering]
+
+threads/thread_model=2
+quality/shadow_atlas/size=2048
+quality/subsurface_scattering/scale=1
+quality/voxel_cone_tracing/high_quality=false
+quality/reflections/atlas_size=1024
+quality/reflections/atlas_subdiv=4
+quality/filters/msaa=2

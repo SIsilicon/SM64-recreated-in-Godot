@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mario-pain.wav-27e9b1c0ded1daf58fd011be039500df.sample"
+
+[deps]
+
+source_file="res://Mario/Sounds/mario-pain.wav"
+dest_files=[ "res://.import/mario-pain.wav-27e9b1c0ded1daf58fd011be039500df.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

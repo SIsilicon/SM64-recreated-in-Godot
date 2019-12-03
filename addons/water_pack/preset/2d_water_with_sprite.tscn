@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/water_pack/shader/2d_water_with_sprite.shader" type="Shader" id=1]
+[ext_resource path="res://addons/water_pack/texture/noise_perlin.jpg" type="Texture" id=2]
+[ext_resource path="res://addons/water_pack/texture/water.png" type="Texture" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+
+render_priority = 0
+shader = ExtResource( 1 )
+shader_param/water_color = Color( 1, 1, 1, 0.679529 )
+shader_param/amplitudo = 0.01
+shader_param/speed = 1.0
+shader_param/scale = Vector2( 1, 1 )
+shader_param/distort_factor = 0.05
+shader_param/distort_speed = null
+shader_param/noise_texture = ExtResource( 2 )
+_sections_unfolded = [ "shader_param" ]
+
+[node name="water" type="Sprite" index="0"]
+
+material = SubResource( 1 )
+position = Vector2( 312.132, 274.878 )
+texture = ExtResource( 3 )
+centered = false
+_sections_unfolded = [ "Animation", "Material", "Offset", "Region", "Transform" ]
+
+

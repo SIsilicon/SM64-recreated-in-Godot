@@ -1,0 +1,4 @@
+Original model by Nintendo.
+Model ported by Friedslick6, with assistance from MarioKart64n.
+All textures should be both clamped and have tiling disabled in order to render correctly.
+Also included within the "*/Textures" directory of this archive are unmodified textures related to the model, and a colour chart with a reference.

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mario-ugh.wav-f69326558b4c9cfcf8ea2cc4f8fa27af.sample"
+
+[deps]
+
+source_file="res://Mario/Sounds/mario-ugh.wav"
+dest_files=[ "res://.import/mario-ugh.wav-f69326558b4c9cfcf8ea2cc4f8fa27af.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

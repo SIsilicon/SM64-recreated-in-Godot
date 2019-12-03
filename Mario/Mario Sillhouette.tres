@@ -1,0 +1,38 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_always, diffuse_burley, specular_schlick_ggx;
+
+uniform float wetness : hint_range(0, 1) = 0.0;
+
+void fragment() {
+	vec2 base_uv = UV;
+	ROUGHNESS = 1.0 - wetness;
+	METALLIC = 1.0;
+	
+	EMISSION += texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
+	ALBEDO = vec3(0.0);
+	ALPHA = 1.0;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/wetness = 0.0
+
+[sub_resource type="Shader" id=3]
+code = "shader_type spatial;
+render_mode unshaded, depth_test_disable;
+
+uniform float transparency;
+
+void fragment() {
+	ALBEDO = texture(SCREEN_TEXTURE, SCREEN_UV).rgb * transparency;
+}"
+
+[resource]
+render_priority = -1
+next_pass = SubResource( 2 )
+shader = SubResource( 3 )
+shader_param/transparency = 0.58

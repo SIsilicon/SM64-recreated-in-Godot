@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Nintendo 64 - Super Mario 64 - Mario/Mario.dae" type="PackedScene" id=1]
+[ext_resource path="res://Mario/Mario.gd" type="Script" id=2]
+
+[node name="Mario" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )

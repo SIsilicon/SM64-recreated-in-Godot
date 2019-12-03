@@ -1,0 +1,12 @@
+Each row on the colour chart represents the gradient values for that colour.
+
+From top to bottom, the row order of colours is:
+Overalls
+Shirt, Cap
+Gloves
+Shoes
+Skin
+Hair
+
+From left to right, the values represented in each row is:
+Lower Gradient 1, Lower Gradient 2, Higher Gradient 1, Higher Gradient 2, Ambient, Shadow

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mario-yahoo.wav-3d8a79487afb4e35f89d582657f56f65.sample"
+
+[deps]
+
+source_file="res://Mario/Sounds/mario-yahoo.wav"
+dest_files=[ "res://.import/mario-yahoo.wav-3d8a79487afb4e35f89d582657f56f65.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Camera.gd" type="Script" id=1]
+[ext_resource path="res://addons/fsm/fsm.gd" type="Script" id=2]
+[ext_resource path="res://addons/fsm/icon.png" type="Texture" id=3]
+[ext_resource path="res://CameraStates/Open Camera.gd" type="Script" id=4]
+[ext_resource path="res://CameraStates/Above Water Camera.gd" type="Script" id=5]
+
+[sub_resource type="SphereShape" id=1]
+radius = 0.2
+
+[node name="CameraSystem" type="KinematicBody"]
+collision_layer = 32
+script = ExtResource( 1 )
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Camera" type="Camera" parent="Node"]
+current = true
+
+[node name="FSM" type="Node" parent="."]
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+INIT_STATE = "Open Camera"
+PROPERTY_ROOT = "_camera"
+
+[node name="Open Camera" type="Node" parent="FSM"]
+script = ExtResource( 4 )
+
+[node name="Above Water Camera" type="Node" parent="FSM"]
+script = ExtResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]

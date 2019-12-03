@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sound Particle.gd" type="Script" id=1]
+
+[node name="Sound Particle" type="AudioStreamPlayer3D"]
+max_db = 1.0
+script = ExtResource( 1 )
+[connection signal="finished" from="." to="." method="_on_Sound_Particle_finished"]

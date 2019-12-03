@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/water_pack/script/2d_water.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0, 0.742188, 1, 0.55251, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[node name="2d_water" type="Node2D"]
+script = ExtResource( 1 )
+water_color = SubResource( 2 )
+water_depth = 383
+resolution = 120

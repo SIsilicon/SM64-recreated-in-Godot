@@ -1,0 +1,135 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://addons/water_pack/material/wet_dirt.material" type="Material" id=1]
+[ext_resource path="res://addons/water_pack/script/wet_dirt.gd" type="Script" id=2]
+[ext_resource path="res://addons/water_pack/texture/seamless_ground_dirt.jpg" type="Texture" id=3]
+[ext_resource path="res://addons/water_pack/texture/DynamicHeightmapNoise_Bump.png" type="Texture" id=4]
+[ext_resource path="res://addons/water_pack/texture/wave_nor1.png" type="Texture" id=5]
+
+[sub_resource type="PlaneMesh" id=1]
+size = Vector2( 30, 30 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+emission_shape = 2
+emission_box_extents = Vector3( 14.8, 0, 14.8 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 0.0
+scale = 0.1
+anim_speed = 1.0
+
+[sub_resource type="Shader" id=3]
+code = "shader_type spatial;
+render_mode skip_vertex_transform, depth_draw_never, depth_test_disable, cull_front;
+//render_mode unshaded;
+
+uniform sampler2D wet_map;
+uniform float wet_map_strength = 1.0;
+uniform float wet_map_bias = 0.0;
+uniform bool invert_wet_map = true;
+uniform vec2 wet_dirt_size = vec2(30,30);
+
+uniform vec2 translation;
+
+float wave(vec2 pos, vec2 samp, float time) {
+	float x = distance(pos, samp);
+	return sin((x-time)*32.0)/(x*8.0) * 0.2 * x;
+}
+
+vec3 wave_normal(vec2 wave_o, vec2 samp, float time, float res) {
+	
+	vec3 left = vec3(samp.x-res, wave(wave_o, samp-vec2(res,0), time), samp.y);
+	vec3 right = vec3(samp.x+res, wave(wave_o, samp+vec2(res,0), time), samp.y);
+	vec3 up = vec3(samp.x, wave(wave_o, samp-vec2(0,res), time), samp.y-res);
+	vec3 down = vec3(samp.x, wave(wave_o, samp+vec2(0,res), time), samp.y+res);
+	
+	return normalize(cross(right-left, up-down));
+}
+
+varying float part_time;
+
+varying flat mat4 inv_model_view_matrix;
+
+void vertex() {
+	VERTEX = (WORLD_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	
+	//COLOR *= 1.0 - INSTANCE_CUSTOM.y;
+	part_time = INSTANCE_CUSTOM.y;
+	inv_model_view_matrix = inverse(MODELVIEW_MATRIX);
+	
+	UV2 = (VERTEX.xz-translation) / wet_dirt_size + 0.5;
+	UV2 = 1.0 - UV2;
+	
+	VERTEX = (INV_CAMERA_MATRIX * vec4(VERTEX, 1.0)).xyz;
+}
+
+void fragment() {
+	ALBEDO = COLOR.rgb;
+	
+	vec4 pos = inv_model_view_matrix * INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, textureLod(DEPTH_TEXTURE, SCREEN_UV, 0.0).r * 2.0 - 1.0, 1.0);
+	pos.xyz /= pos.w;
+	
+	bool inside = all(greaterThanEqual(pos.xyz, vec3(-1))) && all(lessThanEqual(pos.xyz, vec3(1)));
+	if(!inside) discard;
+	if(UV2 != clamp(UV2, vec2(0), vec2(1))) discard;
+	
+	vec2 uv = pos.xz * 0.5 + 0.5;
+	
+	float wetness = invert_wet_map ? 1.0-texture(wet_map, UV2).r : texture(wet_map, UV2).r;
+	wetness = wet_map_strength * (wetness - wet_map_bias);
+	wetness = clamp(wetness, 0.0, 1.0);
+	ALPHA = COLOR.a * pow(wetness, 2.0);
+	
+	METALLIC = 1.0;
+	ROUGHNESS = 0.0;
+	//NORMALMAP = texture(texture_normal,UV).rgb;
+	NORMAL = wave_normal(vec2(0.5), uv, part_time/3.14159, 0.0001).xyz;
+	NORMAL = mix(NORMAL, vec3(0,1,0), min(distance(uv, vec2(0.5)) * 2.0, 1.0));
+	NORMAL = mix(NORMAL, vec3(0,1,0), part_time);
+	normalize(NORMAL);
+	
+	ALPHA *= clamp(length(NORMAL.xz), 0.0, 1.0);
+	ALPHA *= clamp((0.25 - abs(pos.y)) / 0.25, 0.0, 1.0);
+	
+	NORMAL = (INV_CAMERA_MATRIX * WORLD_MATRIX * vec4(NORMAL, 0.0)).xyz;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/wet_map_strength = 1.171
+shader_param/wet_map_bias = -1.447
+shader_param/invert_wet_map = false
+shader_param/wet_dirt_size = Vector2( 30, 30 )
+shader_param/translation = Vector2( 0, 0 )
+shader_param/wet_map = ExtResource( 4 )
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 4 )
+size = Vector3( 2, 0.5, 2 )
+
+[node name="wet_dirt" type="MeshInstance"]
+material_override = ExtResource( 1 )
+mesh = SubResource( 1 )
+material/0 = null
+script = ExtResource( 2 )
+size = Vector2( 30, 30 )
+dirt = ExtResource( 3 )
+wet_map = ExtResource( 4 )
+wave_norm = ExtResource( 5 )
+wet_map_strength = 1.0
+wet_map_bias = 0.007
+wind_dir1 = Vector2( 0.1, 0 )
+wave_size1 = 6.221
+wind_dir2 = Vector2( -0.05, 0.1 )
+wave_size2 = 4.863
+ripples = true
+
+[node name="Particles" type="Particles" parent="."]
+cast_shadow = 0
+amount = 6000
+lifetime = 0.25
+speed_scale = 1.4
+visibility_aabb = AABB( -15, -1, -15, 30, 2, 30 )
+process_material = SubResource( 2 )
+draw_pass_1 = SubResource( 5 )

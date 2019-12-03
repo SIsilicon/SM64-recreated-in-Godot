@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://fire_particle.png" type="Texture" id=1]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.00636943, 0.171975, 0.757962, 0.993631 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.992157, 0.980392, 0.247059, 1, 0.828125, 0.410878, 0.00646973, 1, 0.4375, 0.102539, 0, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.00719008, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.5968 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 1
+emission_sphere_radius = 0.03
+spread = 48.67
+gravity = Vector3( 0, 3.3, 0 )
+angle = 360.0
+angle_random = 1.0
+scale = 0.17
+scale_random = 0.2
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_cull_mode = 2
+params_depth_draw_mode = 2
+params_line_width = 0.1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_color = Color( 1, 0.87451, 0.831373, 0.866667 )
+albedo_texture = ExtResource( 1 )
+proximity_fade_enable = true
+proximity_fade_distance = 0.1
+
+[sub_resource type="QuadMesh" id=7]
+material = SubResource( 6 )
+
+[node name="Particles" type="Particles"]
+amount = 50
+lifetime = 0.48
+visibility_aabb = AABB( -0.638966, -0.658597, -0.876024, 1.27793, 2.24786, 1.75205 )
+process_material = SubResource( 5 )
+draw_pass_1 = SubResource( 7 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+light_color = Color( 1, 0.705882, 0.396078, 1 )
+light_energy = 5.0
+shadow_enabled = true
+omni_range = 26.6
+omni_attenuation = 10.5561

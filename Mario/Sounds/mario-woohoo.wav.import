@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mario-woohoo.wav-d1952a008f6c40f1e71da0c68be2fd37.sample"
+
+[deps]
+
+source_file="res://Mario/Sounds/mario-woohoo.wav"
+dest_files=[ "res://.import/mario-woohoo.wav-d1952a008f6c40f1e71da0c68be2fd37.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0
