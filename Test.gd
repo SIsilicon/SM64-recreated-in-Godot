@@ -98,6 +98,14 @@ func _input(event : InputEvent) -> void:
 				$Mario.debug_velocity_multiplier += 0.1
 			if event.button_index == BUTTON_WHEEL_DOWN:
 				$Mario.debug_velocity_multiplier -= 0.1
+	
+	if event is InputEventKey:
+		if event.scancode == KEY_F2 and event.pressed:
+			var image := get_tree().get_root().get_texture().get_data()
+			image.flip_y()
+			
+			var time = OS.get_datetime()
+			image.save_png("../Screenshot"+str(time.year)+str(time.day)+str(time.hour)+str(time.minute)+str(time.second)+".png")
 
 func _process(delta : float) -> void:
 	if not Engine.editor_hint:
