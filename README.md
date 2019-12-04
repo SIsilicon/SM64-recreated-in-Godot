@@ -2,24 +2,24 @@
 
 
 
-This is Godot project of a recreation of the infamous Super Mario 64. More specifically, one of its levels, Hazy Maze Cave. It is _very much_ work in progress, so any code or resource contribution is welcome.
+This is Godot project of a recreation of the infamous Super Mario 64. More specifically, one of its levels, Hazy Maze Cave. It is __very much__ work in progress, so any code or resource contribution is welcome.
 
 
 
-To move about you use the arrow keys (I have no controller to test with). To compensate for the lack of a control stick, scrolling the middle mouse will slow down, or speed up Mario. There's no cap.
+## Controls
 
-The A button is the X key.
+Use the arrow keys, or the left control stick to move Mario. In both cases you can scroll your mouse wheel to speed up, or slow down. There's currently no cap for this as it is just for testing.
 
-The B button is the Z key.
+To jump press the X key, or the A/B buttons on your gamepad.
 
-The Z button is the Shift key.
+To punch press the Z key, or the X/Y buttons on your gamepad.
 
-You can turn the camera with the A and D keys.
+To crouch press the Shift key, or the second set of L/R buttons your gamepad has.
+
+You can turn the camera with the A and D keys, or with the right control stick.
 
 You can also take a screenshot with F2.
 
-For testing purposes, the Q key allows you to jump indefinitely with the Q key.
-
-
+For testing purposes, the Q key allows you to jump indefinitely.
 
 ![Screenshot4146222204](Screenshots/Screenshot4146222204.png)![Screenshot4103528208](Screenshots/Screenshot4103528208.png)![Screenshot4146222204](Screenshots/Screenshot3280913730.png)![Screenshot1079535570](Screenshots/Screenshot1079535570.png)
