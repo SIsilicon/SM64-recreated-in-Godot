@@ -75,6 +75,11 @@ func _ready():
 	Global.mario = self
 	anim_player.playback_process_mode = AnimationPlayer.ANIMATION_PROCESS_MANUAL
 	
+	for state in $FSM.states:
+		var node : Node = $FSM.states[state].values()[0]
+		if node.get_flags() == -1:
+			print(state)
+	
 	setup_materials()
 
 func _process(delta : float) -> void:

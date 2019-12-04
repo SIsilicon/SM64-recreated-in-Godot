@@ -18,4 +18,7 @@ func _update(delta : float):
 #	play_sound_if_no_flag(m, SOUND_ACTION_UNKNOWN433, MARIO_ACTION_SOUND_PLAYED)
 	
 	if _mario.anim_at_end():
-		return "swimming end"
+		return "water idle"
+
+func get_flags() -> int:
+		return ACT_FLAG_MOVING | ACT_FLAG_SWIMMING

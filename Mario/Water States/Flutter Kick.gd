@@ -23,3 +23,6 @@ func _update(delta : float):
 		pass #func_802713A8(m);
 	
 	common_swimming_step(160)
+
+func get_flags() -> int:
+		return ACT_FLAG_MOVING | ACT_FLAG_SWIMMING

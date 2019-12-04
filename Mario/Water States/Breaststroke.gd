@@ -47,3 +47,6 @@ func _update(delta : float):
 #    }
 	
 	common_swimming_step(_mario.terminal_swim_speed)
+
+func get_flags() -> int:
+		return ACT_FLAG_MOVING | ACT_FLAG_SWIMMING

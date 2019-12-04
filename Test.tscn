@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Test.gd" type="Script" id=1]
 [ext_resource path="res://Physics/debug_collisions.material" type="Material" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://addons/water_pack/script/water.gd" type="Script" id=6]
 [ext_resource path="res://addons/water_pack/lake_icon.svg" type="Texture" id=7]
 [ext_resource path="res://Entities/Scuttlebug/Scuttlebug.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Entities/Coin/Coin.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ArrayMesh" id=35]
 surfaces/0 = {
@@ -477,19 +478,53 @@ box_projection = true
 [node name="Scuttlebug" parent="." instance=ExtResource( 8 )]
 transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -61.2859, 21.65, 67.3124 )
 
-[node name="Label" type="Label" parent="."]
+[node name="Coin" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.694508, -0.0246704, 0.719062, 0, 0.999412, 0.034289, -0.719485, -0.023814, 0.694099, -26.5542, 20.8472, 48.1795 )
+
+[node name="Coin2" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.694508, -0.0246704, 0.719062, 0, 0.999412, 0.034289, -0.719485, -0.023814, 0.694099, -22.4877, 20.8685, 44.8615 )
+
+[node name="Coin3" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.694508, -0.0246704, 0.719062, 0, 0.999412, 0.034289, -0.719485, -0.023814, 0.694099, -18.4522, 20.9038, 42.1625 )
+
+[node name="GUI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="GUI"]
 margin_right = 40.0
 margin_bottom = 14.0
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="ProgressBar" type="ProgressBar" parent="GUI"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -96.0
-margin_right = 97.0
+margin_left = 396.0
+margin_right = 589.0
 margin_bottom = 41.0
 max_value = 8.0
 step = 1.0
 value = 8.0
 percent_visible = false
+
+[node name="VSeparator" type="VSeparator" parent="GUI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 898.0
+margin_right = 984.0
+margin_bottom = 14.0
+
+[node name="Label2" type="Label" parent="GUI/VSeparator"]
+margin_right = 43.0
+margin_bottom = 14.0
+text = "Coins: "
+
+[node name="CoinCounter" type="Label" parent="GUI/VSeparator"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_bottom = 14.0
+size_flags_horizontal = 0
+text = "0"
+align = 2
 [connection signal="body_entered" from="Test Enemy" to="Test Enemy" method="_on_Area_body_entered"]
 [connection signal="body_entered" from="MovingPlatform/Area" to="MovingPlatform" method="_on_Area_body_entered"]

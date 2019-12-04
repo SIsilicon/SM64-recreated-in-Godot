@@ -118,17 +118,20 @@ func _process(delta : float) -> void:
 		debug += "Mario Health: " + str($Mario.health) + "\n"
 		debug += "Mario Above Slide: " + str($Mario.above_slide) + "\n\n"
 		debug += "Mario State Switch per Fram: " + str($Mario.debug_state_switch_count)
-		$Label.text = debug
+		$GUI/Label.text = debug
 		
 		var sector = $Mario.health >> 8
-		
 		if sector > 6:
-			$ProgressBar.modulate = Color.blue
+			$GUI/ProgressBar.modulate = Color.blue
 		elif sector > 4:
-			$ProgressBar.modulate = Color.green
+			$GUI/ProgressBar.modulate = Color.green
 		elif sector > 2:
-			$ProgressBar.modulate = Color.yellow
+			$GUI/ProgressBar.modulate = Color.yellow
 		else:
-			$ProgressBar.modulate = Color.red
+			$GUI/ProgressBar.modulate = Color.red
+		$GUI/ProgressBar.value = sector
 		
-		$ProgressBar.value = sector
+		var coins = float($GUI/VSeparator/CoinCounter.text)
+		coins = min(coins + 1, Global.coin_counter)
+		
+		$GUI/VSeparator/CoinCounter.text = str(coins)

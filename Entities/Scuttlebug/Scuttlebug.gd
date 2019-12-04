@@ -97,7 +97,7 @@ func _process(delta : float) -> void:
 	if move_flags & 3:
 		$AnimationPlayer.play("Scuttlebug-walk")
 	
-	move_standard(-50)
+	move_standard(-0.87)
 	rotation.y = move_angle_yaw
 
 func _on_body_entered(body : Node) -> void:
@@ -106,11 +106,24 @@ func _on_body_entered(body : Node) -> void:
 			if body.is_in_air() and body.velocity.y < 0.0 and body.translation.y > translation.y:
 				body.velocity.y = 42.0
 				body.jumped_on_entity = true
+				die()
 			elif body.is_in_air() and body.velocity.y > 0.0 and body.translation.y < translation.y:
 				body.velocity.y = 0.0
 				body.jumped_on_entity = true
+				die()
 			else:
 				body.hurt(4, translation)
+
+func die() -> void:
+	var coin_inst := preload("../Coin/Coin.tscn")
+	
+	for i in 3:
+		var coin = coin_inst.instance()
+		coin.lifetime = 15.0
+		coin.translation = translation
+		get_parent().add_child(coin)
+	
+	queue_free()
 
 func get_wall_collide_radius() -> float:
 	return $CollisionShape.shape.radius

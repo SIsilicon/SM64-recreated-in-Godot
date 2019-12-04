@@ -21,3 +21,6 @@ func _update(delta : float):
 	
 	if _mario.anim_at_end():
 		_mario.play_anim("mario-in-water")
+
+func get_flags() -> int:
+		return ACT_FLAG_STATIONARY | ACT_FLAG_SWIMMING | ACT_FLAG_PAUSE_EXIT

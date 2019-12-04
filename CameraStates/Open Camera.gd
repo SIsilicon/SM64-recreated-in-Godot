@@ -33,12 +33,6 @@ func _update(delta : float):
 	target_pos.y = floor_height + 1.0
 	_camera.translation.y = floor_height + zoom
 	
-	var dir_to_target := target_pos.direction_to(_camera.translation)
-	var dist_to_target := target_pos.distance_to(_camera.translation)
-	
-	if dist_to_target > 2.0 * zoom:
-		_camera.translation += dir_to_target * (2.0 * zoom - dist_to_target)
-	
 	_camera.look_at(Global.mario.translation, Vector3.UP)
 	
 	var step = prev_translation
@@ -47,5 +41,9 @@ func _update(delta : float):
 		var floor_data := Collisions.find_floor(step)
 		if floor_data.floor and _camera.translation.y < floor_data.height + 0.2:
 			_camera.translation.y = floor_data.height + 0.2
+	
+	var dir_to_target := target_pos.direction_to(_camera.translation)
+	var dist_to_target := target_pos.distance_to(_camera.translation)
+	_camera.translation += dir_to_target * (1.5 * zoom - dist_to_target)
 	
 	Collisions.pop_collision_mask()
