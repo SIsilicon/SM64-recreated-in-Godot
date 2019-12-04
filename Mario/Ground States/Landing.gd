@@ -90,3 +90,23 @@ func landing_cancel():
 	
 	if _mario.off_floor:
 		return "free falling"
+
+func get_flags():
+	var flags := 0
+	
+	match _previous_state:
+		"backflip":
+			flags |= ACT_FLAG_PAUSE_EXIT
+		"triple jump":
+			flags |= ACT_FLAG_PAUSE_EXIT
+		"long jump":
+			flags |= ACT_FLAG_PAUSE_EXIT
+		_:
+			flags |= ACT_FLAG_ALLOW_FIRST_PERSON | ACT_FLAG_PAUSE_EXIT
+	
+	if action_timer == 0: # stopped
+		flags |= ACT_FLAG_STATIONARY
+	else:
+		flags |= ACT_FLAG_MOVING
+	
+	return flags

@@ -28,3 +28,6 @@ func _update(delta : float):
 				return "metal falling"
 		else:
 			return "water idle"
+
+func get_flags() -> int:
+	return ACT_FLAG_STATIONARY | ACT_FLAG_SWIMMING

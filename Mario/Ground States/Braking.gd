@@ -26,3 +26,6 @@ func _update(delta : float):
 
 func _exit() -> void:
 	_mario.stop_slide_sound()
+
+func get_flags() -> int:
+	return ACT_FLAG_MOVING | ACT_FLAG_ALLOW_FIRST_PERSON

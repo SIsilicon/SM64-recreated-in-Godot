@@ -10,7 +10,7 @@ func _update(delta : float):
 #    }
 	
 	if Input.is_action_just_pressed("punch"):
-		pass #return "water punch"
+		return "water punch"
 	
 	if Input.is_action_just_pressed("jump"):
 		return "breaststroke"

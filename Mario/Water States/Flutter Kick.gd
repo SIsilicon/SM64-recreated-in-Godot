@@ -7,6 +7,9 @@ func _enter() -> void:
 
 func _update(delta : float):
 	
+	if Input.is_action_just_pressed("punch"):
+		return "water punch"
+	
 	if not Input.is_action_pressed("jump"):
 		if action_timer == 0 and _mario.terminal_swim_speed < 280:
 			_mario.terminal_swim_speed

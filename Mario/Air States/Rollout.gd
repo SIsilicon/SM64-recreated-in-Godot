@@ -27,3 +27,6 @@ func _update(delta : float):
 
 func _exit() -> void:
 	is_backward = false
+
+func get_flags() -> int:
+	return ACT_FLAG_AIR

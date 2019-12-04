@@ -14,9 +14,9 @@ func _update(delta : float):
 #        return set_mario_action(m, ACT_METAL_WATER_FALLING, 1);
 #    }
 #
-#    if (m->input & INPUT_B_PRESSED) {
-#        return set_mario_action(m, ACT_WATER_PUNCH, 0);
-#    }
+	
+	if Input.is_action_just_pressed("punch"):
+		return "water punch"
 	
 	action_timer += 1
 	if action_timer == 14:

@@ -24,3 +24,6 @@ func _update(delta : float):
 	
 	if _mario.anim_at_end():
 		_mario.play_anim("mario-crouch")
+
+func get_flags() -> int:
+	return ACT_FLAG_STATIONARY | ACT_FLAG_SHORT_HITBOX | ACT_FLAG_ALLOW_FIRST_PERSON | ACT_FLAG_PAUSE_EXIT

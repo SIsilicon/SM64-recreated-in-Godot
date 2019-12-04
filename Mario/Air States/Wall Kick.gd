@@ -46,5 +46,5 @@ func _update(delta : float):
 	else:
 		_mario.play_anim("mario-pre-wallkick")
 
-func _exit():
-	pass
+func get_flags() -> int:
+	return ACT_FLAG_AIR | ACT_FLAG_CONTROL_JUMP_HEIGHT

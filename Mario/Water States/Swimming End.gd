@@ -8,6 +8,9 @@ func _update(delta : float):
 	if action_timer >= 15:
 		return "water idle"
 	
+	if Input.is_action_just_pressed("punch"):
+		return "water punch"
+	
 	if Input.is_action_pressed("jump") and action_timer >= 7:
 		if action_timer == 7 and _mario.terminal_swim_speed < 280:
 			_mario.terminal_swim_speed += 10

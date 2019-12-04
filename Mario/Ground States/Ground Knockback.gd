@@ -52,3 +52,6 @@ func _update(delta : float):
 func check_dead():
 	if _mario.health == 0x00FF:
 		_fsm.change_state("death")
+
+func get_flags() -> int:
+	return ACT_FLAG_MOVING | ACT_FLAG_INVULNERABLE

@@ -26,3 +26,6 @@ func _update(delta : float):
 
 func _exit() -> void:
 	wall_kick_timer = 0
+
+func get_flags() -> int:
+	return ACT_FLAG_AIR | ACT_FLAG_INVULNERABLE

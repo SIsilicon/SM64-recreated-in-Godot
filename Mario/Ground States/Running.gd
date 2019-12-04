@@ -160,3 +160,6 @@ func _exit():
 	_mario.rotation.z = 0
 	_mario.anim_player.playback_speed = 1
 	_mario.reset_custom_poses()
+
+func get_flags() -> int:
+	return ACT_FLAG_MOVING | ACT_FLAG_ALLOW_FIRST_PERSON

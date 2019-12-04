@@ -60,4 +60,12 @@ func _update(delta : float):
 				return "free falling"
 			GROUND_STEP_NONE:
 				pass #m->particleFlags |= PARTICLE_DUST
+
+func get_flags() -> int:
+	var flags = ACT_FLAG_ATTACKING
+	if action_timer == 0: # regular punch
+		flags |= ACT_FLAG_MOVING
+	else:
+		flags |= ACT_FLAG_STATIONARY
 	
+	return flags

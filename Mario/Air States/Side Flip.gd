@@ -16,3 +16,6 @@ func _update(delta : float):
 
 func _exit():
 	_mario.rotation.y += PI
+
+func get_flags() -> int:
+	return ACT_FLAG_AIR

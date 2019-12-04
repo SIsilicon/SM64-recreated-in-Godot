@@ -30,3 +30,6 @@ func _update(delta : float):
 
 func _exit() -> void:
 	_mario.rotation.x = 0
+
+func get_flags() -> int:
+	return ACT_FLAG_AIR | ACT_FLAG_DIVING | ACT_FLAG_ATTACKING

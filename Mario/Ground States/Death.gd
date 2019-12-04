@@ -21,3 +21,6 @@ func _enter() -> void:
 func _update(delta : float):
 	if _mario.anim_at_end():
 		get_tree().quit()
+
+func get_flags() -> int:
+	return ACT_FLAG_STATIONARY | ACT_FLAG_INTANGIBLE

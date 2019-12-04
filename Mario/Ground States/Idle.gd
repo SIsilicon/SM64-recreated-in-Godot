@@ -57,3 +57,6 @@ func _update(delta : float):
 		if Input.is_action_pressed("analog"):
 			_mario.face_angle.y = _mario.intended_yaw
 			return "running"
+
+func get_flags() -> int:
+	return ACT_FLAG_STATIONARY | ACT_FLAG_IDLE | ACT_FLAG_ALLOW_FIRST_PERSON | ACT_FLAG_PAUSE_EXIT

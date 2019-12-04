@@ -28,7 +28,7 @@ func _update(delta : float):
 		if floor_height < mario_floor_height:
 			floor_height = lerp(floor_height, mario_floor_height, 0.5)
 		else:
-			floor_height = Utils.approach(floor_height, mario_floor_height, 0.5)
+			floor_height = Utils.approach(floor_height, mario_floor_height, 0.1)
 	
 	target_pos.y = floor_height + 1.0
 	_camera.translation.y = floor_height + zoom

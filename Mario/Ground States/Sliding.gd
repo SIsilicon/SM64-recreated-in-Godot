@@ -32,3 +32,10 @@ func _exit():
 	_mario.rotation.x = 0
 	_mario.rotation.z = 0
 	_mario.stop_slide_sound()
+
+func get_flags() -> int:
+	var flags = ACT_FLAG_MOVING | ACT_FLAG_BUTT_OR_STOMACH_SLIDE | ACT_FLAG_ATTACKING
+	if not is_butt_slide:
+		flags |= ACT_FLAG_DIVING
+	
+	return flags

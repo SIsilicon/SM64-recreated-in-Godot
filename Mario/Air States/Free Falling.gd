@@ -9,3 +9,6 @@ func _update(delta : float):
 		return "dive"
 	
 	return action_in_air("mario-freefall-land", AIR_CHECK_LEDGE_GRAB | AIR_CHECK_FALL_DAMAGE | AIR_CHECK_WALL_KICK)
+
+func get_flags() -> int:
+	return ACT_FLAG_AIR

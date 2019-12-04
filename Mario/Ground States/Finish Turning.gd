@@ -16,3 +16,6 @@ func _update(delta : float):
 		return "running"
 	
 	_mario.rotation.y = _mario.face_angle.y + PI
+
+func get_flags() -> int:
+	return ACT_FLAG_MOVING

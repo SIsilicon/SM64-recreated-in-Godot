@@ -14,3 +14,6 @@ func _update(delta : float):
 			return check_fall_damage("landing")
 		AIR_STEP_HIT_WALL:
 			_mario.set_forward_velocity(0.0)
+
+func get_flags() -> int:
+	return ACT_FLAG_AIR | ACT_FLAG_ATTACKING

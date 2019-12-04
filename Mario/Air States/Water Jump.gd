@@ -23,3 +23,6 @@ func _update(delta : float):
 		AIR_STEP_GRABBED_LEDGE:
 			Global.camera.set_camera("open camera", 0.5)
 			return "ledge grab"
+
+func get_flags() -> int:
+	return ACT_FLAG_AIR

@@ -65,3 +65,6 @@ func let_go_of_ledge() -> String:
 		_mario.translation.y = floor_dat.height
 	
 	return "soft bonk"
+
+func get_flags() -> int:
+	return ACT_FLAG_STATIONARY | ACT_FLAG_PAUSE_EXIT

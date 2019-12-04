@@ -24,3 +24,6 @@ func _update(delta : float):
 func _exit() -> void:
 	_mario.rotation.x = 0
 	_mario.rotation.z = 0
+
+func get_flags() -> int:
+	return ACT_FLAG_MOVING | ACT_FLAG_SHORT_HITBOX | ACT_FLAG_ATTACKING | ACT_FLAG_ALLOW_FIRST_PERSON

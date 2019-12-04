@@ -9,3 +9,6 @@ func _enter() -> void:
 
 func _update(delta : float):
 	return action_in_air("mario-landing-celebration", AIR_CHECK_FALL_DAMAGE)
+
+func get_flags() -> int:
+	return ACT_FLAG_AIR

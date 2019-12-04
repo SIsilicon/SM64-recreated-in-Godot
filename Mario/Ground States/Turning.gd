@@ -35,3 +35,6 @@ func _update(delta : float):
 				return begin_walking_state(-_mario.forward_velocity, "running")
 			else:
 				return begin_walking_state(8, "running")
+
+func get_flags() -> int:
+	return ACT_FLAG_MOVING

@@ -28,3 +28,6 @@ func _update(delta : float):
 			return "ledge grab"
 	
 	_mario.rotation.y = steep_yaw
+
+func get_flags() -> int:
+	return ACT_FLAG_AIR | ACT_FLAG_CONTROL_JUMP_HEIGHT
