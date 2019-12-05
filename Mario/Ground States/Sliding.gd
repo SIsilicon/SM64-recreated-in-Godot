@@ -12,7 +12,8 @@ func _enter() -> void:
 		_mario.play_anim("mario-sliding")
 	else:
 		stop_animation = "mario-stop-diving"
-		_mario.play_anim("mario-dive-slide")
+		if _mario.anim_player.current_animation != "mario-dive":
+			_mario.play_anim("mario-dive-slide")
 	_mario.start_slide_sound()
 
 func _update(delta : float):

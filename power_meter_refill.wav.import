@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/power_meter_refill.wav-99b27e4a551c1c1c96bc663f91c21de2.sample"
+
+[deps]
+
+source_file="res://power_meter_refill.wav"
+dest_files=[ "res://.import/power_meter_refill.wav-99b27e4a551c1c1c96bc663f91c21de2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

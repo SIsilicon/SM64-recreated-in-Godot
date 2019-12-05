@@ -5,11 +5,12 @@ resource_name = "HighPassFilter"
 cutoff_hz = 1298.3
 
 [resource]
+bus/0/volume_db = 11.9
 bus/1/name = "Mario"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
-bus/1/volume_db = 3.5
+bus/1/volume_db = 0.0
 bus/1/send = "Master"
 bus/1/effect/0/effect = SubResource( 1 )
 bus/1/effect/0/enabled = true

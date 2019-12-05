@@ -58,6 +58,7 @@ var wall_surf : Surface
 var water_level : float
 
 # Mario variables
+var state : String setget , get_state
 var last_air_state : String
 var double_jump_timer : int
 var peak_height : float
@@ -169,8 +170,8 @@ func _process(delta : float) -> void:
 	$SquishAnimation.seek(squished / 30.0, true)
 	squished = max(squished - 1, 0)
 	
-	if $FSM.active_state != "ground knockback" and $FSM.active_state != "death":
-		if $FSM.get_node_by_state($FSM.active_state).has_method("is_ground_state") and health == 0x00FF:
+	if self.state != "ground knockback" and self.state != "death":
+		if $FSM.get_node_by_state(self.state).has_method("is_ground_state") and health == 0x00FF:
 			$FSM.change_state("death")
 	
 	Collisions.pop_collision_mask()
@@ -273,21 +274,38 @@ func hurt(damage : int, pos : Vector3) -> void:
 		$FSM.get_node_by_state("ground knockback").knockback_strength = int((2 if damage > 4 else 1) * sign(dir))
 		$FSM.change_state("ground knockback")
 
+func is_attacking(target : Vector3) -> bool:
+	var state := self.state
+	if state == "punch" || state == "air kick":
+		if $FSM.get_node_by_state(state).attack_window_open:
+			var vec_to_target := ((target - translation) * Vector3(1, 0, 1)).normalized()
+			var angle_to_target := atan2(vec_to_target.x, vec_to_target.z)
+			
+			if abs(Utils.angle_diff(angle_to_target, face_angle.y)) < PI/4:
+				return true
+	elif state == "dive":
+		return true
+	
+	return false
+
 func is_in_air() -> bool:
-	return $FSM.get_node_by_state($FSM.active_state).has_method("is_air_state")
+	return $FSM.get_node_by_state(self.state).has_method("is_air_state")
 
 func is_on_ground() -> bool:
-	return $FSM.get_node_by_state($FSM.active_state).has_method("is_ground_state")
+	return $FSM.get_node_by_state(self.state).has_method("is_ground_state")
 
 func is_stationary() -> bool:
-	return $FSM.get_node_by_state($FSM.active_state).has_method("is_stationary_state")
+	return $FSM.get_node_by_state(self.state).has_method("is_stationary_state")
 
 func is_underwater() -> bool:
-	return $FSM.get_node_by_state($FSM.active_state).has_method("is_underwater_state")
+	return $FSM.get_node_by_state(self.state).has_method("is_underwater_state")
 
 func is_diving() -> bool:
-	var state : String = $FSM.active_state
+	var state : String = self.state
 	return state == "sliding" or state == "dive"
+
+func get_state() -> String:
+	return $FSM.active_state
 
 func get_floor_class() -> int:
 	var floor_class := Surface.SURFACE_CLASS_DEFAULT
@@ -311,7 +329,7 @@ func get_floor_class() -> int:
 			Surface.SURFACE_NOISE_VERY_SLIPPERY: floor_class = Surface.SURFACE_CLASS_VERY_SLIPPERY
 #			Surface.SURFACE_NO_CAM_COL_VERY_SLIPPERY:
 		
-		if $FSM.active_state == "crawling" and floor_surf.normal.y > 0.5 and floor_class == Surface.SURFACE_CLASS_DEFAULT:
+		if self.state == "crawling" and floor_surf.normal.y > 0.5 and floor_class == Surface.SURFACE_CLASS_DEFAULT:
 			floor_class = Surface.SURFACE_CLASS_NOT_SLIPPERY
 	
 	return floor_class

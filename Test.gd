@@ -1,6 +1,8 @@
 tool
 extends Spatial
 
+var prev_sector : int
+
 func _ready() -> void:
 	if Engine.editor_hint:
 		for i in range($Surfaces.get_child_count()-1, -1, -1):
@@ -90,6 +92,8 @@ func _ready() -> void:
 		debug_surf.generate_normals()
 		debug_surf.index()
 		$Debug.mesh = debug_surf.commit()
+	else:
+		prev_sector = Global.mario.health >> 8
 
 func _input(event : InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -120,7 +124,7 @@ func _process(delta : float) -> void:
 		debug += "Mario State Switch per Fram: " + str($Mario.debug_state_switch_count)
 		$GUI/Label.text = debug
 		
-		var sector = $Mario.health >> 8
+		var sector : int = $Mario.health >> 8
 		if sector > 6:
 			$GUI/ProgressBar.modulate = Color.blue
 		elif sector > 4:
@@ -131,7 +135,16 @@ func _process(delta : float) -> void:
 			$GUI/ProgressBar.modulate = Color.red
 		$GUI/ProgressBar.value = sector
 		
-		var coins = float($GUI/VSeparator/CoinCounter.text)
-		coins = min(coins + 1, Global.coin_counter)
+		if sector > prev_sector:
+			$GUI/ProgressBar/MeterRefill.play()
+			print("refill")
+		prev_sector = sector
 		
+		var coins := float($GUI/VSeparator/CoinCounter.text)
+		var prev_coins := coins
+		coins = min(coins + 1, Global.coin_counter)
 		$GUI/VSeparator/CoinCounter.text = str(coins)
+		
+		if coins != prev_coins:
+			$GUI/VSeparator/CoinSound.translation = Global.mario.translation
+			$GUI/VSeparator/CoinSound.play()

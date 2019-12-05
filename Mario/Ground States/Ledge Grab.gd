@@ -16,6 +16,8 @@ func _enter() -> void:
 		playing_climb_down = false
 		_mario.play_anim("mario-idle-ledge")
 	
+	_mario.set_forward_velocity(0.0)
+	
 	_mario.play_mario_sound(_mario.SOUND_WHOA)
 	_mario.rotation.y = _mario.face_angle.y
 

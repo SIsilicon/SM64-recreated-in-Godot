@@ -7,6 +7,8 @@
 height = 0.64
 
 [node name="Coin" instance=ExtResource( 1 )]
+collision_layer = 8
+collision_mask = 4
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="." index="1"]

@@ -12,8 +12,7 @@ func _ready():
 func _process(delta : float) -> void:
 	if lifetime > 0:
 		update_floor_and_walls()
-	
-	move_standard(-1.08)
+		move_standard(-1.08)
 	
 	if intangible_buffer == 0:
 		$CollisionShape.disabled = false
@@ -26,5 +25,5 @@ func _on_body_entered(body : Node) -> void:
 	if not Engine.editor_hint:
 		if body is Mario:
 			Global.coin_counter += 1
-			
+			Global.mario.health_inc += 4
 			queue_free()

@@ -2,10 +2,15 @@ extends GroundState
 
 var _previous_state : String
 var first_frame : bool
+var action_state := 0
 var velocity : float
+
+var attack_window_open : bool
 
 func _enter() -> void:
 	action_timer = 0
+	action_state = 0
+	attack_window_open = true
 	first_frame = true
 	velocity = 10.0
 	
@@ -26,21 +31,29 @@ func _update(delta : float):
 		return "free falling"
 	
 	if Input.is_action_just_pressed("punch"):
-		match action_timer:
+		match action_state:
 			0:
 				_mario.play_anim("mario-second-punch")
 				_mario.play_mario_sound(_mario.SOUND_WA)
-				action_timer = 1
+				action_state = 1
+				action_timer = 0
 			1:
 				_mario.play_anim("mario-ground-kick")
 				_mario.play_mario_sound(_mario.SOUND_HOO)
-				action_timer = 2
+				action_state = 2
+				action_timer = 0
 	
 	if _mario.anim_at_end():
 		if _fsm.get_node_by_state(_previous_state).has_method("is_stationary_state"):
 			return "idle"
 		else:
 			return "running"
+	
+	if action_timer < 5:
+		attack_window_open = true
+		action_timer += 1
+	else:
+		attack_window_open = false
 	
 	if _fsm.get_node_by_state(_previous_state).has_method("is_stationary_state"):
 		velocity *= 0.7

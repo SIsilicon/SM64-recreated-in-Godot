@@ -38,7 +38,8 @@ func _process(delta : float) -> void:
 	match state:
 		0:
 			if move_flags & 1:
-				pass #PlaySound2(SOUND_OBJ_GOOMBA_ALERT)
+				$Alert.pitch_scale = 1
+				$Alert.play()
 			if move_flags & 3:
 				home = translation
 				state += 1
@@ -53,7 +54,8 @@ func _process(delta : float) -> void:
 					if abs(Utils.angle_diff(angle_to_mario, move_angle_yaw)) < deg2rad(11.25):
 						is_alert = 1
 						velocity.y = 20.0
-#						PlaySound2(SOUND_OBJ2_SCUTTLEBUG_ALERT)
+						$Alert.pitch_scale = 1.2
+						$Alert.play()
 				elif is_alert == 1:
 					forward_velocity = 15.0
 					alert_timer += 1
@@ -78,7 +80,8 @@ func _process(delta : float) -> void:
 #			Flags &= ~8
 			forward_velocity = -10.0
 			velocity.y = 30.0
-#			PlaySound2(SOUND_OBJ2_SCUTTLEBUG_ALERT)
+			$Alert.pitch_scale = 1.2
+			$Alert.play()
 			state += 1
 		4:
 			forward_velocity = -10.0
@@ -103,7 +106,9 @@ func _process(delta : float) -> void:
 func _on_body_entered(body : Node) -> void:
 	if not Engine.editor_hint:
 		if body is Mario:
-			if body.is_in_air() and body.velocity.y < 0.0 and body.translation.y > translation.y:
+			if body.is_attacking(translation):
+				die()
+			elif body.is_in_air() and body.velocity.y < 0.0 and body.translation.y > translation.y:
 				body.velocity.y = 42.0
 				body.jumped_on_entity = true
 				die()
@@ -122,6 +127,12 @@ func die() -> void:
 		coin.lifetime = 15.0
 		coin.translation = translation
 		get_parent().add_child(coin)
+	
+	var dead_sound = SoundParticle.new(preload("../enemy_down_1.wav"), translation)
+	get_parent().add_child(dead_sound)
+	
+	var squash_sound = SoundParticle.new(preload("../stomp.wav"), translation)
+	get_parent().add_child(squash_sound)
 	
 	queue_free()
 
