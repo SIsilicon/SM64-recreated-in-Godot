@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Entities/Star/Star.dae" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Star/Star.gd" type="Script" id=2]
+
+[sub_resource type="CylinderShape" id=1]
+radius = 0.833726
+height = 0.755153
+
+[node name="Star" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Star" parent="." index="0"]
+transform = Transform( 1.315, 0, 0, 0, 1.315, 0, 0, 0, 1.315, 0, 0.348, 0 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="." index="1"]
+transform = Transform( 0.653701, -0.755447, 0.0444365, 0.3762, 0.37536, 0.8471, -0.656619, -0.537033, 0.529573, 0.167348, 3.19018, 2.70021 )
+editor_only = true
+
+[node name="CollisionShape" type="CollisionShape" parent="." index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.378, 0 )
+shape = SubResource( 1 )

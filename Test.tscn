@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Test.gd" type="Script" id=1]
 [ext_resource path="res://Physics/debug_collisions.material" type="Material" id=2]
@@ -9,8 +9,9 @@
 [ext_resource path="res://addons/water_pack/lake_icon.svg" type="Texture" id=7]
 [ext_resource path="res://Entities/Scuttlebug/Scuttlebug.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Entities/Coin/Coin.tscn" type="PackedScene" id=9]
-[ext_resource path="res://power_meter_refill.wav" type="AudioStream" id=10]
-[ext_resource path="res://Entities/Coin/coin_collect.wav" type="AudioStream" id=11]
+[ext_resource path="res://Entities/Star/Star.tscn" type="PackedScene" id=10]
+[ext_resource path="res://power_meter_refill.wav" type="AudioStream" id=11]
+[ext_resource path="res://Entities/Coin/coin_collect.wav" type="AudioStream" id=12]
 
 [sub_resource type="ArrayMesh" id=30]
 surfaces/0 = {
@@ -24,24 +25,6 @@ surfaces/0 = {
 "skeleton_aabb": [  ],
 "vertex_count": 4779
 }
-
-[sub_resource type="GDScript" id=2]
-script/source = "extends Area
-
-func _on_Area_body_entered(body):
-	if body is Mario:
-		
-		if body.is_in_air() and body.velocity.y < 0.0 and body.translation.y > translation.y:
-			body.velocity.y = 42.0
-			body.jumped_on_entity = true
-		elif body.is_in_air() and body.velocity.y > 0.0 and body.translation.y < translation.y:
-			body.velocity.y = 0.0
-			body.jumped_on_entity = true
-		else:
-			body.hurt(4, translation)
-"
-
-[sub_resource type="CylinderShape" id=3]
 
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 2.71, 0.5, 2.71 )
@@ -111,6 +94,8 @@ ssao_intensity2 = 0.0
 ssao_bias = 0.001
 ssao_quality = 1
 dof_blur_far_distance = 30.0
+glow_blend_mode = 0
+glow_hdr_threshold = 1.04
 
 [sub_resource type="BoxShape" id=21]
 extents = Vector3( 41.8791, 10.5797, 55.7978 )
@@ -207,6 +192,24 @@ resource_local_to_scene = true
 shader = SubResource( 27 )
 shader_param/tex = SubResource( 28 )
 
+[sub_resource type="GDScript" id=2]
+script/source = "extends Area
+
+func _on_Area_body_entered(body):
+	if body is Mario:
+		
+		if body.is_in_air() and body.velocity.y < 0.0 and body.translation.y > translation.y:
+			body.velocity.y = 42.0
+			body.jumped_on_entity = true
+		elif body.is_in_air() and body.velocity.y > 0.0 and body.translation.y < translation.y:
+			body.velocity.y = 0.0
+			body.jumped_on_entity = true
+		else:
+			body.hurt(4, translation)
+"
+
+[sub_resource type="CylinderShape" id=3]
+
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
 
@@ -215,17 +218,8 @@ material_override = ExtResource( 2 )
 mesh = SubResource( 30 )
 material/0 = null
 
-[node name="Test Enemy" type="Area" parent="."]
-transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 21.748, 0.926666, 55.2538 )
-collision_layer = 8
-collision_mask = 5
-script = SubResource( 2 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Test Enemy"]
-shape = SubResource( 3 )
-
 [node name="CameraSystem" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.206079, 0.00243297, -0.978533, 0.0568176, 0.99834, -0.00948356, 0.976885, -0.0575522, -0.205875, -70.6071, 29.6884, 75.4024 )
+transform = Transform( 0.838499, 0.0530112, -0.54232, -0.0309871, 0.998285, 0.0496711, 0.544023, -0.0248442, 0.838703, -73.5748, 25.9244, 75.4024 )
 
 [node name="MovingPlatform" type="Spatial" parent="."]
 editor/display_folded = true
@@ -375,11 +369,14 @@ __meta__ = {
 "_editor_icon": ExtResource( 7 )
 }
 size = Vector2( 83.08, 112.97 )
+use_planar_reflection = false
+color = Color( 0, 0.5, 1, 1 )
 fog_density = 0.003
 speed = 0.07
 frequency = -0.036
 amplitude = -0.077
 velocity = Vector2( 0, 0.05 )
+density = 1.0
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.7676, 0 )
@@ -387,6 +384,7 @@ visible = false
 shape = SubResource( 21 )
 
 [node name="Viewport" type="Viewport" parent="Area"]
+editor/display_folded = true
 size = Vector2( 512, 512 )
 own_world = true
 handle_input_locally = false
@@ -401,6 +399,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Viewport2" type="Viewport" parent="Area"]
+editor/display_folded = true
 size = Vector2( 512, 512 )
 own_world = true
 handle_input_locally = false
@@ -415,6 +414,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Normal Map" type="Viewport" parent="Area"]
+editor/display_folded = true
 size = Vector2( 512, 512 )
 own_world = true
 handle_input_locally = false
@@ -436,25 +436,44 @@ extents = Vector3( 46.3461, 16.72, 52.5012 )
 origin_offset = Vector3( 4.637, -3.263, 9.82 )
 box_projection = true
 
-[node name="Scuttlebug" parent="." instance=ExtResource( 8 )]
+[node name="Entities" type="Spatial" parent="."]
+
+[node name="Scuttlebug" parent="Entities" instance=ExtResource( 8 )]
 transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -61.2859, 21.65, 67.3124 )
 
-[node name="Coin" parent="." instance=ExtResource( 9 )]
+[node name="Coin" parent="Entities" instance=ExtResource( 9 )]
 transform = Transform( 0.694508, -0.0246704, 0.719062, 0, 0.999412, 0.034289, -0.719485, -0.023814, 0.694099, -26.5542, 20.8472, 48.1795 )
 
-[node name="Coin4" parent="." instance=ExtResource( 9 )]
+[node name="Coin4" parent="Entities" instance=ExtResource( 9 )]
 transform = Transform( 0.694508, -0.0246704, 0.719062, 0, 0.999412, 0.034289, -0.719485, -0.023814, 0.694099, -24.5222, 20.8596, 46.5936 )
 
-[node name="Coin2" parent="." instance=ExtResource( 9 )]
+[node name="Coin2" parent="Entities" instance=ExtResource( 9 )]
 transform = Transform( 0.694508, -0.0246704, 0.719062, 0, 0.999412, 0.034289, -0.719485, -0.023814, 0.694099, -22.4877, 20.8685, 44.8615 )
 
-[node name="Coin5" parent="." instance=ExtResource( 9 )]
+[node name="Coin5" parent="Entities" instance=ExtResource( 9 )]
 transform = Transform( 0.694508, -0.0246704, 0.719062, 0, 0.999412, 0.034289, -0.719485, -0.023814, 0.694099, -20.1811, 20.8881, 43.294 )
 
-[node name="Coin3" parent="." instance=ExtResource( 9 )]
+[node name="Coin3" parent="Entities" instance=ExtResource( 9 )]
 transform = Transform( 0.694508, -0.0246704, 0.719062, 0, 0.999412, 0.034289, -0.719485, -0.023814, 0.694099, -18.4522, 20.9038, 42.1625 )
 
+[node name="Star" parent="Entities" instance=ExtResource( 10 )]
+transform = Transform( -0.835542, 0, -0.549426, 0, 1, 0, 0.549426, 0, -0.835542, -50.2732, 30.4922, -67.3816 )
+
+[node name="Star2" parent="Entities" instance=ExtResource( 10 )]
+transform = Transform( -0.999923, 0, 0.0123828, 0, 1, 0, -0.0123828, 0, -0.999923, -35.6567, -40.8415, 35.7867 )
+
+[node name="Test Enemy" type="Area" parent="Entities"]
+editor/display_folded = true
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 21.748, 0.926666, 55.2538 )
+collision_layer = 8
+collision_mask = 5
+script = SubResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Entities/Test Enemy"]
+shape = SubResource( 3 )
+
 [node name="GUI" type="Control" parent="."]
+editor/display_folded = true
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -474,8 +493,8 @@ value = 8.0
 percent_visible = false
 
 [node name="MeterRefill" type="AudioStreamPlayer" parent="GUI/ProgressBar"]
-stream = ExtResource( 10 )
-volume_db = -12.0
+stream = ExtResource( 11 )
+volume_db = -18.0
 
 [node name="VSeparator" type="VSeparator" parent="GUI"]
 anchor_left = 1.0
@@ -499,6 +518,6 @@ text = "0"
 align = 2
 
 [node name="CoinSound" type="AudioStreamPlayer3D" parent="GUI/VSeparator"]
-stream = ExtResource( 11 )
-[connection signal="body_entered" from="Test Enemy" to="Test Enemy" method="_on_Area_body_entered"]
+stream = ExtResource( 12 )
 [connection signal="body_entered" from="MovingPlatform/Area" to="MovingPlatform" method="_on_Area_body_entered"]
+[connection signal="body_entered" from="Entities/Test Enemy" to="Entities/Test Enemy" method="_on_Area_body_entered"]

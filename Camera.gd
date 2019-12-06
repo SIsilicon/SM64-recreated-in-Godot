@@ -13,7 +13,7 @@ func _init():
 
 func _ready():
 	$FSM.call_deferred("_update", 1.0)
-	camera.transform = self.transform
+	camera.transform = transform
 
 func _process(delta : float) -> void:
 	$FSM._update(delta)
