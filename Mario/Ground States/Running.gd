@@ -52,8 +52,8 @@ func update_against_wall(start_pos : Vector3) -> void:
 	
 	var wall_angle : float
 	var diff_wall_angle : float
-	var dx := _mario.translation.x - start_pos.x
-	var dz := _mario.translation.z - start_pos.z
+	var dx : float = _mario.translation.x - start_pos.x
+	var dz : float = _mario.translation.z - start_pos.z
 	var moved_distance := sqrt(dx * dx + dz * dz)
 	var sidestep_speed = moved_distance * 160.0
 	
@@ -128,15 +128,12 @@ func _update(delta : float):
 	
 	update_walking_speed()
 	
-	if check_ledge_climb_down():
-		return "ledge grab"
-	
 	var prev_pos = _mario.translation
 	sidestepping = false
 	pushing = false
 	match perform_ground_q_steps():
 		GROUND_STEP_LEFT_GROUND:
-			return "free falling"
+			_fsm.change_state("free falling")
 		GROUND_STEP_NONE:
 			update_visual_walking_speed()
 			
@@ -149,16 +146,17 @@ func _update(delta : float):
 			torso_rot.y = Utils.approach(torso_rot.y, val02, 0.1)
 			
 			_mario.rotation.y = _mario.face_angle.y
-			skeleton.set_bone_custom_pose(10, Transform().rotated(Vector3.UP, -torso_rot.x).rotated(Vector3.RIGHT, -torso_rot.y))
-			skeleton.set_bone_custom_pose(1, Transform().rotated(Vector3.UP, torso_rot.x).rotated(Vector3.FORWARD, torso_rot.y))
+			skeleton.set_bone_custom_pose(10, Transform().rotated(Vector3.FORWARD, torso_rot.x).rotated(Vector3.RIGHT, -torso_rot.y))
+			skeleton.set_bone_custom_pose(1, Transform().rotated(Vector3.FORWARD, -torso_rot.x).rotated(Vector3.UP, torso_rot.y))
 		GROUND_STEP_HIT_WALL:
 			update_against_wall(prev_pos)
 	
+	if check_ledge_climb_down():
+		_fsm.change_state("ledge grab")
 	prev_yaw = _mario.face_angle.y
 
 func _exit():
 	_mario.rotation.z = 0
-	_mario.anim_player.playback_speed = 1
 	_mario.reset_custom_poses()
 
 func get_flags() -> int:

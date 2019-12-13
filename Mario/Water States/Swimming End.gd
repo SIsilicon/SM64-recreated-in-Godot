@@ -17,7 +17,7 @@ func _update(delta : float):
 		return "breaststroke"
 	
 	if action_timer >= 7:
-		_mario.terminal_swim_speed = 160
+		_mario.terminal_swim_speed = 160.0
 	
 	action_timer += 1
 	

@@ -14,7 +14,7 @@ func _update(delta : float):
 			_mario.set_forward_velocity(-_mario.forward_velocity)
 			return "wall kick"
 	
-	return action_knockback(0, _mario.forward_velocity)
+	action_knockback(0, _mario.forward_velocity)
 
 func _exit() -> void:
 	wall_kick_timer = 0

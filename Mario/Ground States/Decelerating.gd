@@ -19,7 +19,7 @@ func _update(delta : float):
 	
 	match perform_ground_q_steps():
 		GROUND_STEP_LEFT_GROUND:
-			return "free falling"
+			_fsm.change_state("free falling")
 
 func get_flags() -> int:
 	return ACT_FLAG_MOVING | ACT_FLAG_ALLOW_FIRST_PERSON

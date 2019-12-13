@@ -14,7 +14,7 @@ func _enter() -> void:
 	_mario.play_mario_sound(_mario.SOUND_YAHOO)
 
 func _update(delta : float):
-	return action_in_air("mario-fast-longjump-land" if fast_longjump else "mario-slow-longjump-land", AIR_CHECK_LEDGE_GRAB | AIR_CHECK_FALL_DAMAGE | AIR_CHECK_WALL_KICK)
+	action_in_air("mario-fast-longjump-land" if fast_longjump else "mario-slow-longjump-land", AIR_CHECK_LEDGE_GRAB | AIR_CHECK_FALL_DAMAGE | AIR_CHECK_WALL_KICK)
 
 func get_flags() -> int:
 	return ACT_FLAG_AIR

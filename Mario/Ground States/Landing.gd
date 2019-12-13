@@ -3,6 +3,7 @@ extends GroundState
 var _previous_state
 
 var knockback : bool
+var attack_window_open := false
 
 func _init():
 	action_timer = 4
@@ -31,7 +32,7 @@ func _update(delta : float):
 		if should_begin_sliding():
 			return "sliding"
 		
-		if Input.is_action_pressed("analog"):
+		if _mario.intended_mag > 0.0:
 			apply_landing_accel(0.98)
 		elif _mario.forward_velocity >= 16.0:
 			apply_slope_decel(2.0)
@@ -42,9 +43,9 @@ func _update(delta : float):
 			GROUND_STEP_LEFT_GROUND:
 				_mario.velocity.y = 0
 				if knockback:
-					return "air knockback"
+					_fsm.change_state("air knockback")
 				else:
-					return "free falling"
+					_fsm.change_state("free falling")
 	
 	else: # Not moving
 		
@@ -76,11 +77,11 @@ func landing_cancel():
 	if should_begin_sliding():
 		return "sliding"
 	
-#	var debug_blj = _mario.forward_velocity < 0 and _previous_state == "long jump"
-#	debug_blj = debug_blj and (_mario.translation.x > -327.68 and _mario.translation.x < 327.67 ||\
-#				_mario.translation.z > -327.68 and _mario.translation.z < 327.67)
+	var debug_blj = Global.debug_blj and _mario.forward_velocity < 0 and _previous_state == "long jump"
+	debug_blj = debug_blj and (_mario.translation.x > -327.68 and _mario.translation.x < 327.67 ||\
+				_mario.translation.z > -327.68 and _mario.translation.z < 327.67)
 	
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") or debug_blj:
 		if Input.is_action_pressed("crouch"):
 			if _previous_state == "long jump":
 				return set_jumping_state("long jump")

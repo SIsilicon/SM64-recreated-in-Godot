@@ -22,7 +22,7 @@ func _update(delta : float):
 	
 	match perform_ground_q_steps():
 		GROUND_STEP_LEFT_GROUND:
-			return "free falling"
+			_fsm.change_state("free falling")
 
 func _exit() -> void:
 	_mario.stop_slide_sound()

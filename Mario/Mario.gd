@@ -34,7 +34,7 @@ var terminal_swim_speed := 160.0
 var anim_length : float
 var anim_backwards : bool
 onready var anim_player := $AnimationPlayer
-onready var skeleton := $"Mario-rig"/Skeleton
+onready var skeleton := $"Mario-rig"
 var screamed := false
 
 # Health variables
@@ -68,6 +68,8 @@ var off_floor := false
 var in_water := false
 var jumped_on_entity := false
 
+var star
+
 # Debug variables
 var debug_velocity_multiplier = 1
 var debug_state_switch_count = 0
@@ -76,10 +78,12 @@ func _ready():
 	Global.mario = self
 	anim_player.playback_process_mode = AnimationPlayer.ANIMATION_PROCESS_MANUAL
 	
+	face_angle = rotation
+	
 	for state in $FSM.states:
 		var node : Node = $FSM.states[state].values()[0]
-		if node.get_flags() == -1:
-			print(state)
+		if node.get_flags() == 0:
+			prints(state, "has no flags!")
 	
 	setup_materials()
 
@@ -140,12 +144,17 @@ func _process(delta : float) -> void:
 		
 #		in_poison_gas = translation.y < gas_level - 1.0
 		
+		if floor_surf.type == Surface.SURFACE_DEATH_PLANE and translation.y - floor_height < 20.48:
+			# Mario fell to his death! This is the app's response for now.
+			get_tree().quit()
+		
 	else:
 		breakpoint #level_trigger_warp(m, WARP_OP_DEATH)
 	
 	if Input.is_key_pressed(KEY_Q):
 		velocity.y = 20
 	debug_state_switch_count = 0
+	anim_player.playback_speed = 1.0
 	
 	$FSM._update(delta)
 	
@@ -203,10 +212,13 @@ func update_face() -> void:
 	
 	# Jaw
 	skeleton.set_bone_custom_pose(31, Transform().rotated(Vector3.RIGHT, deg2rad(12.0)))
+	
+	if self.state == "star dance":
+		skeleton.set_bone_custom_pose(31, Transform())
 
 func reset_custom_poses() -> void:
-	for i in $"Mario-rig"/Skeleton.get_bone_count():
-		$"Mario-rig"/Skeleton.set_bone_custom_pose(i, Transform())
+	for i in skeleton.get_bone_count():
+		skeleton.set_bone_custom_pose(i, Transform())
 
 func update_velocity() -> Vector3:
 	velocity.x = forward_velocity * sin(face_angle.y)
@@ -239,7 +251,7 @@ func get_input_direction() -> Vector2:
 	intended_mag *= debug_velocity_multiplier
 	
 	if intended_mag > 0:
-		intended_yaw = wrapf(dir.angle() + get_viewport().get_camera().rotation.y + PI/2, -PI, PI)
+		intended_yaw = wrapf(dir.angle() + get_viewport().get_camera().global_transform.basis.get_euler().y + PI/2, -PI, PI)
 		Input.action_press("analog", intended_mag)
 	else:
 		intended_yaw = face_angle.y
@@ -283,7 +295,7 @@ func is_attacking(target : Vector3) -> bool:
 			
 			if abs(Utils.angle_diff(angle_to_target, face_angle.y)) < PI/4:
 				return true
-	elif state == "dive":
+	elif $FSM.get_node_by_state(state).get_flags() & State.ACT_FLAG_ATTACKING:
 		return true
 	
 	return false
@@ -306,6 +318,9 @@ func is_diving() -> bool:
 
 func get_state() -> String:
 	return $FSM.active_state
+
+func get_state_node() -> Node:
+	return $FSM.get_node_by_state(get_state())
 
 func get_floor_class() -> int:
 	var floor_class := Surface.SURFACE_CLASS_DEFAULT

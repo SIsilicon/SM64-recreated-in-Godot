@@ -17,6 +17,12 @@ func _enter() -> void:
 			_mario.play_anim("mario-stop-crouch")
 		"sliding":
 			_mario.play_anim(_fsm.get_node_by_state("sliding").stop_animation)
+		"landing":
+			if _mario.last_air_state == "ground pound":
+				_mario.play_anim("mario-stop-sliding")
+			else:
+				wait_on_animation = false
+				_mario.play_anim("mario-idle")
 		"running":
 			wait_on_animation = false
 			if _fsm.get_node_by_state(_previous_state).sidestepping:

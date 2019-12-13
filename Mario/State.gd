@@ -25,7 +25,7 @@ const ACT_FLAG_PAUSE_EXIT                 = 0x08000000
 var action_timer : int
 
 var _fsm
-var _mario : Mario
+var _mario
 
 func get_flags() -> int:
-	return -1
+	return 0

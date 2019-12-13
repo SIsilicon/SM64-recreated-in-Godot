@@ -1,22 +1,209 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Entities/Star/Star.dae" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Star/Star.gd" type="Script" id=2]
+[ext_resource path="res://enter_course.wav" type="AudioStream" id=3]
 
 [sub_resource type="CylinderShape" id=1]
-radius = 0.833726
+radius = 0.569281
 height = 0.755153
 
-[node name="Star" instance=ExtResource( 1 )]
+[sub_resource type="Shader" id=2]
+code = "shader_type spatial;
+render_mode unshaded, blend_add;
+
+uniform vec4 color : hint_color;
+uniform float proximity_fade_distance = 0.1;
+
+void vertex() {
+	
+	MODELVIEW_MATRIX[0][0] = 1.0; 
+	MODELVIEW_MATRIX[0][1] = 0.0; 
+	MODELVIEW_MATRIX[0][2] = 0.0; 
+	
+	// Second colunm.
+	MODELVIEW_MATRIX[1][0] = 0.0; 
+	MODELVIEW_MATRIX[1][1] = 1.0; 
+	MODELVIEW_MATRIX[1][2] = 0.0; 
+	
+	// Thrid colunm.
+	MODELVIEW_MATRIX[2][0] = 0.0; 
+	MODELVIEW_MATRIX[2][1] = 0.0; 
+	MODELVIEW_MATRIX[2][2] = 1.0; 
+}
+
+void fragment() {
+	if(COLOR.a <= 0.0) {
+		discard;
+	}
+	
+	float dist = distance(UV, vec2(0.5, 0.5)) * 2.0;
+	dist = smoothstep(0.0, 1.0, dist);
+	ALPHA = clamp((1.0 - dist) * color.a * COLOR.a, 0.0, 1.0);
+	ALBEDO = color.rgb * COLOR.rgb;
+	
+	float depth_tex = textureLod(DEPTH_TEXTURE, SCREEN_UV, 0.0).r;
+	vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV*2.0-1.0, depth_tex*2.0-1.0, 1.0);
+	world_pos.xyz /= world_pos.w;
+	ALPHA *= clamp(1.0-smoothstep(world_pos.z+proximity_fade_distance, world_pos.z, VERTEX.z), 0.0, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/color = Color( 0.788235, 0.760784, 0.541176, 0 )
+shader_param/proximity_fade_distance = 0.854
+
+[sub_resource type="ImageTexture" id=4]
+size = Vector2( 200, 200 )
+
+[sub_resource type="Animation" id=7]
+resource_name = "collect"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Star:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:glow_opacity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "star dance"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Star:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.08, 0.09, 0.12 ), Vector3( 1.4, 1.4, 1.4 ) ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Star:translation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -0.869577, -0.25, -0.271518, 0.23, 0.249797, 0.825888, -0.12, -0.0626018, 0.1, 0.0521681, -0.895661, -0.15, 0.0326051, 0.12, -0.0260841, 0.825888, -0.13, 0.209164, 0.170239, -0.273907, -0.817408, -0.185851, -0.200804, 0.11563, 0.124934, 0.0172817, -0.137875, 0.198229, 0.25, -0.359435 ),
+"times": PoolRealArray( 0.02, 0.3, 0.63, 0.92, 1.22, 1.47 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Star:translation:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0.348, -0.25, 0, 0.25, 0, 2.20498, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1.46534 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Star:translation:z")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.249999, -1.03189, 0.143729, 0.593255, -1.49986, -0.0631006, 0, 0.0631006, 0, 1.29096, -0.0736174, 0, 0.0736174, 0, -0.802154, -0.0841342, -0.232568, 0.0841342, 0.232568, 1.7561, -0.059595, 0.232568, 0.059595, -0.232568, -0.104449, -0.094651, -0.232568, 0.094651, 0.232568 ),
+"times": PoolRealArray( 0, 0.140224, 0.480266, 0.781747, 1.06921, 1.46884 )
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Star:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -3600, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Star:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Sprite3D:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[node name="Star" index="0" instance=ExtResource( 1 )]
+collision_layer = 8
+collision_mask = 4
 script = ExtResource( 2 )
+glow_opacity = 1.0
 
 [node name="Star" parent="." index="0"]
-transform = Transform( 1.315, 0, 0, 0, 1.315, 0, 0, 0, 1.315, 0, 0.348, 0 )
+transform = Transform( 1.4, 0, 1.55759e-006, 0, 1.4, 0, -1.55759e-006, 0, 1.4, 0.0172817, 0.363484, -0.104449 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="." index="1"]
-transform = Transform( 0.653701, -0.755447, 0.0444365, 0.3762, 0.37536, 0.8471, -0.656619, -0.537033, 0.529573, 0.167348, 3.19018, 2.70021 )
+transform = Transform( 0.102174, -0.993774, 0.0444367, 0.523463, 0.0916975, 0.8471, -0.8459, -0.0632905, 0.529572, 1.50234, 5.16199, 3.21073 )
 editor_only = true
 
 [node name="CollisionShape" type="CollisionShape" parent="." index="2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.378, 0 )
 shape = SubResource( 1 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="3"]
+stream = ExtResource( 3 )
+
+[node name="Sprite3D" type="Sprite3D" parent="." index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.344129, 0 )
+material_override = SubResource( 3 )
+texture = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+anims/collect = SubResource( 7 )
+"anims/star dance" = SubResource( 8 )
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_started"]

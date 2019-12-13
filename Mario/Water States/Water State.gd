@@ -10,7 +10,7 @@ func swimming_near_surface() -> bool:
 	return (_mario.water_level - 0.8) - _mario.translation.y < 4.0
 
 func check_water_jump() -> bool:
-	var probe := _mario.translation.y + 0.015
+	var probe : float = _mario.translation.y + 0.015
 	
 	if Input.is_action_just_pressed("jump"):
 		if probe >= _mario.water_level - 0.8 and _mario.face_angle.x >= 0 and _mario.stick_dir.y < -60.0:
@@ -43,7 +43,7 @@ func water_full_step(step : Vector3) -> int:
 	var wall : Surface = _mario.resolve_and_return_wall_collisions(step_dict, 0.1, 1.1)
 	step = step_dict.vec
 	var floor_dat := Collisions.find_floor(step)
-	var ceil_height := _mario.find_ceil(step, floor_dat.height)
+	var ceil_height : float = _mario.find_ceil(step, floor_dat.height)
 	
 	if not floor_dat.floor:
 		print("no floor")

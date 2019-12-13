@@ -40,14 +40,14 @@ func _update(delta : float):
 	if perform_ground_q_steps() == GROUND_STEP_LEFT_GROUND:
 		_mario.velocity.y = 0.0
 		_fsm.get_node_by_state("air knockback").dir = sign(knockback_strength)
-		return "air knockback"
+		_fsm.change_state("air knockback")
 	if _mario.anim_at_end():
 		if _mario.health < 0x100:
-			return "death"
+			_fsm.change_state("death")
 		else: 
 #			if _mario.got_hurt:
 #				_mario.invincTimer = 30
-			return "idle"
+			_fsm.change_state("idle")
 
 func check_dead():
 	if _mario.health == 0x00FF:

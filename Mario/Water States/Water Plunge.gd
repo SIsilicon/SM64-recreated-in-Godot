@@ -23,11 +23,11 @@ func _update(delta : float):
 	var step_result := perform_water_step()
 	if step_result == WATER_STEP_HIT_FLOOR or _mario.velocity.y >= end_speed or action_timer > 20:
 		if _previous_state == "sliding" or _previous_state == "dive":
-			return "flutter kick"
+			_fsm.change_state("flutter kick")
 		elif false: #Metal cap on:
-				return "metal falling"
+			_fsm.change_state("metal falling")
 		else:
-			return "water idle"
+			_fsm.change_state("water idle")
 
 func get_flags() -> int:
 	return ACT_FLAG_STATIONARY | ACT_FLAG_SWIMMING

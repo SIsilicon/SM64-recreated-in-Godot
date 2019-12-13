@@ -18,7 +18,7 @@ func _update(delta : float):
 	_mario.forward_velocity = Utils.approach_signed(_mario.forward_velocity, 12.0, 0.1, 0.15)
 	action_timer = 1
 	
-	_mario.terminal_swim_speed = 160
+	_mario.terminal_swim_speed = 160.0
 	if _mario.forward_velocity < 14.0:
 		pass #func_802713A8(m);
 	

@@ -1,21 +1,28 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Camera.gd" type="Script" id=1]
 [ext_resource path="res://addons/fsm/fsm.gd" type="Script" id=2]
 [ext_resource path="res://addons/fsm/icon.png" type="Texture" id=3]
 [ext_resource path="res://CameraStates/Open Camera.gd" type="Script" id=4]
 [ext_resource path="res://CameraStates/Above Water Camera.gd" type="Script" id=5]
+[ext_resource path="res://CameraStates/Door Camera.gd" type="Script" id=6]
+[ext_resource path="res://CameraStates/Hanging Camera.gd" type="Script" id=7]
+[ext_resource path="res://CameraStates/Star Camera.gd" type="Script" id=8]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.2
 
 [node name="CameraSystem" type="KinematicBody"]
 collision_layer = 32
+collision_mask = 16
 script = ExtResource( 1 )
 
 [node name="Node" type="Node" parent="."]
 
-[node name="Camera" type="Camera" parent="Node"]
+[node name="Root" type="Spatial" parent="Node"]
+
+[node name="Camera" type="Camera" parent="Node/Root"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.267423 )
 current = true
 
 [node name="FSM" type="Node" parent="."]
@@ -31,6 +38,15 @@ script = ExtResource( 4 )
 
 [node name="Above Water Camera" type="Node" parent="FSM"]
 script = ExtResource( 5 )
+
+[node name="Door Camera" type="Node" parent="FSM"]
+script = ExtResource( 6 )
+
+[node name="Hanging Camera" type="Node" parent="FSM"]
+script = ExtResource( 7 )
+
+[node name="Star Camera" type="Node" parent="FSM"]
+script = ExtResource( 8 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )

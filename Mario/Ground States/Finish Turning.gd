@@ -10,10 +10,10 @@ func _update(delta : float):
 	update_walking_speed()
 	
 	if perform_ground_q_steps() == GROUND_STEP_LEFT_GROUND:
-		return "free falling"
+		_fsm.change_state("free falling")
 	
 	if _mario.anim_at_end():
-		return "running"
+		_fsm.change_state("running")
 	
 	_mario.rotation.y = _mario.face_angle.y + PI
 

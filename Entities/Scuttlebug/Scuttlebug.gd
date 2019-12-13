@@ -24,10 +24,6 @@ func _ready() -> void:
 	set_process(not Engine.editor_hint)
 
 func _process(delta : float) -> void:
-	
-	if velocity.y == 26:
-		breakpoint
-	
 	update_floor_and_walls()
 	if state != 0 and false:
 #        && obj_set_hitbox_and_die_if_attacked(&sScuttlebugHitbox, SOUND_OBJ_DYING_ENEMY1,
@@ -103,9 +99,10 @@ func _process(delta : float) -> void:
 	move_standard(-0.87)
 	rotation.y = move_angle_yaw
 
-func _on_body_entered(body : Node) -> void:
+func _on_body_entered(body : Spatial) -> void:
 	if not Engine.editor_hint:
 		if body is Mario:
+			print(body.state)
 			if body.is_attacking(translation):
 				die()
 			elif body.is_in_air() and body.velocity.y < 0.0 and body.translation.y > translation.y:
@@ -130,10 +127,10 @@ func die() -> void:
 	
 	var dead_sound = SoundParticle.new(preload("../enemy_down_1.wav"), translation)
 	get_parent().add_child(dead_sound)
-	
 	var squash_sound = SoundParticle.new(preload("../stomp.wav"), translation)
 	get_parent().add_child(squash_sound)
 	
+	$CollisionShape.disabled = true
 	queue_free()
 
 func get_wall_collide_radius() -> float:

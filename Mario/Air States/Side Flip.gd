@@ -11,8 +11,10 @@ func _enter() -> void:
 func _update(delta : float):
 	if Input.is_action_just_pressed("punch"):
 		return "dive"
+	if Input.is_action_just_pressed("crouch"):
+		return "ground pound"
 	
-	return action_in_air("mario-freefall-land", AIR_CHECK_LEDGE_GRAB | AIR_CHECK_FALL_DAMAGE | AIR_CHECK_WALL_KICK)
+	action_in_air("mario-freefall-land", AIR_CHECK_LEDGE_GRAB | AIR_CHECK_FALL_DAMAGE | AIR_CHECK_WALL_KICK)
 
 func _exit():
 	_mario.rotation.y += PI

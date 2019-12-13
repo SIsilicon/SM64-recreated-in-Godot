@@ -92,6 +92,8 @@ func _ready() -> void:
 		debug_surf.generate_normals()
 		debug_surf.index()
 		$Debug.mesh = debug_surf.commit()
+		
+		load_entities_from_file()
 	else:
 		prev_sector = Global.mario.health >> 8
 
@@ -113,6 +115,9 @@ func _input(event : InputEvent) -> void:
 
 func _process(delta : float) -> void:
 	if not Engine.editor_hint:
+		$Debug.translation.x = stepify(Global.mario.translation.x, 655.36)
+		$Debug.translation.z = stepify(Global.mario.translation.z, 655.36)
+		
 		var debug := ""
 		debug += "Surface Type: " + (str($Mario.floor_surf.type) if $Mario.floor_surf else "null") + "\n"
 		debug += "Surface Height: " + str($Mario.floor_height) + "\n"
@@ -148,3 +153,42 @@ func _process(delta : float) -> void:
 		if coins != prev_coins:
 			$GUI/VSeparator/CoinSound.translation = Global.mario.translation
 			$GUI/VSeparator/CoinSound.play()
+
+func load_entities_from_file():
+	# Let's not load anything while we still have entities in the node.
+	if $Entities.get_child_count() > 0:
+		return
+	
+	var entity_data := File.new()
+	entity_data.open("res://macro.s", File.READ)
+	
+	while not entity_data.eof_reached():
+		var line := entity_data.get_line()
+		
+		if line.find("macro_object /*preset*/") != -1:
+			var char_index := line.find("set*/") + 6
+			var char_end := line.find(",")
+			var entity := line.substr(char_index, char_end - char_index)
+			
+			char_index = line.find("pos*/") + 6
+			char_end = line.find("/", char_index)
+			if char_end == -1:
+				char_end = line.length() - 1
+			var pos_string := line.substr(char_index, char_end - char_index)
+			var pos := pos_string.replace(" ", "").split_floats(",", false)
+			
+			var entity_node : Spatial
+			
+			match entity:
+				"macro_scuttlebug":
+					entity_node = preload("Entities/Scuttlebug/Scuttlebug.tscn").instance()
+				"macro_yellow_coin_2":
+					entity_node = preload("Entities/Coin/Coin.tscn").instance()
+			
+			if entity_node:
+				# For some reason, the positions in the file don't match up with the level collision.
+				# Will have to place adjust positions after loading for now.
+				entity_node.translate(Vector3(pos[0], pos[1], pos[2]) * 0.01)
+				$Entities.add_child(entity_node)
+				entity_node.owner = self
+				prints(entity, entity_node.translation)

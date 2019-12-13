@@ -3,9 +3,9 @@ class_name AirState
 
 var kb_state : Node
 
-enum {AIR_STEP_NONE, AIR_STEP_HIT_WALL, AIR_STEP_LANDED, AIR_STEP_GRABBED_LEDGE}
+enum {AIR_STEP_NONE, AIR_STEP_HIT_WALL, AIR_STEP_LANDED, AIR_STEP_GRABBED_LEDGE, AIR_STEP_GRABBED_CEILING}
 
-enum {AIR_CHECK_LEDGE_GRAB = 1, AIR_CHECK_FALL_DAMAGE = 2, AIR_CHECK_WALL_KICK = 4}
+enum {AIR_CHECK_LEDGE_GRAB = 1, AIR_CHECK_FALL_DAMAGE = 2, AIR_CHECK_WALL_KICK = 4, AIR_CHECK_HANG = 8}
 
 func check_ledge_grab(wall : Surface, intended_pos : Vector3, next_pos : Vector3) -> bool:
 	var ledge_floor : Surface
@@ -60,7 +60,7 @@ func air_q_step(step : Vector3, step_args := 0) -> int:
 	step = step_dict.vec
 	
 	var floor_dat := Collisions.find_floor(step)
-	var ceil_height := _mario.find_ceil(step, floor_dat.height)
+	var ceil_height : float = _mario.find_ceil(step, floor_dat.height)
 #	waterLevel = find_water_level(next_pos.x, next_pos.z)
 	
 	_mario.wall_surf = null
@@ -91,9 +91,9 @@ func air_q_step(step : Vector3, step_args := 0) -> int:
 			_mario.velocity.y = 0.0
 			
 			#! Uses referenced ceiling instead of ceil (ceiling hang upwarp)
-#			if (stepArg & AIR_STEP_CHECK_HANG) && _mario.ceil != NULL
-#				&& _mario.ceil->type == SURFACE_HANGABLE) 
-#				return AIR_STEP_GRABBED_CEILING
+			if (step_args & AIR_CHECK_HANG) and _mario.ceil_surf \
+				and _mario.ceil_surf.type == Surface.SURFACE_HANGABLE:
+				return AIR_STEP_GRABBED_CEILING
 			
 			return AIR_STEP_NONE
 		
@@ -145,8 +145,11 @@ func perform_air_q_steps(step_args := 0) -> int:
 	if _mario.velocity.y >= 0.0:
 		_mario.peak_height = _mario.translation.y
 	
-	if _fsm.active_state == "long jump":
+	if _fsm.active_state == "long jump" or _fsm.active_state == "slide kick":
 		_mario.velocity.y -= 2
+	elif _fsm.active_state == "lava boost" or _fsm.active_state == "star fall":
+		_mario.velocity.y -= 3.2
+		_mario.velocity.y = max(_mario.velocity.y, -65.0)
 	elif should_strengthen_gravity_for_jump_ascent():
 		_mario.velocity.y /= 4.0
 	else:
@@ -159,7 +162,7 @@ func perform_air_q_steps(step_args := 0) -> int:
 	
 	return stepResult
 
-func check_fall_damage(land_state : String) -> String:
+func check_fall_damage(land_state : String) -> void:
 	if not _mario.got_hurt:
 		var fall_height = _mario.peak_height - _mario.translation.y
 		
@@ -168,14 +171,14 @@ func check_fall_damage(land_state : String) -> String:
 #			set_camera_shake(SHAKE_FALL_DAMAGE);
 			kb_state.knockback_strength = 3 if _fsm.active_state == "dive" else -3
 			_mario.play_mario_sound(_mario.SOUND_PAIN)
-			return "ground knockback"
+			_fsm.change_state("ground knockback")
 		elif fall_height > 11.5 and not _mario.floor_is_slippery():
 			_mario.health_dec += 8
 			_mario.squished = 30
 #			set_camera_shake(SHAKE_FALL_DAMAGE);
 			_mario.play_mario_sound(_mario.SOUND_PAIN)
 	
-	return land_state
+	_fsm.change_state(land_state)
 
 func kick_or_dive_in_air():
 	return "dive" if _mario.forward_velocity > 28.0 else "air kick"
@@ -212,13 +215,13 @@ func update_air_without_turn() -> void:
 		_mario.velocity.z = _mario.slide_vel_z
 
 func should_strengthen_gravity_for_jump_ascent() -> bool:
-	if _fsm.active_state == "jump" || _fsm.active_state == "double jump" || _fsm.active_state == "triple jump":
-		if !Input.is_action_pressed("jump") and _mario.velocity.y > 20 and not _mario.jumped_on_entity:
-			return true
+	
+	if !Input.is_action_pressed("jump") and _mario.velocity.y > 20 and not _mario.jumped_on_entity:
+		return _fsm.get_node_by_state(_fsm.active_state).get_flags() & ACT_FLAG_CONTROL_JUMP_HEIGHT != 0
 	
 	return false
 
-func action_in_air(land_animation : String, step_args := 0):
+func action_in_air(land_animation : String, step_args := 0) -> void:
 	update_air_without_turn()
 	
 	match perform_air_q_steps(step_args):
@@ -229,9 +232,9 @@ func action_in_air(land_animation : String, step_args := 0):
 			_mario.play_anim(land_animation)
 			
 			if step_args % AIR_CHECK_FALL_DAMAGE:
-				return check_fall_damage("landing")
+				check_fall_damage("landing")
 			else:
-				return "landing"
+				_fsm.change_state("landing")
 			
 		AIR_STEP_HIT_WALL:
 			if _mario.forward_velocity > 16.0:
@@ -239,23 +242,25 @@ func action_in_air(land_animation : String, step_args := 0):
 				_mario.face_angle.y = wrapf(_mario.face_angle.y + PI, -PI, PI)
 				
 				if _mario.wall_surf:
-					return "wall kick" #set_mario_action(m, ACT_AIR_HIT_WALL, 0)
+					_fsm.change_state("wall kick")
 				else:
 					_mario.velocity.y = min(_mario.velocity.y, 0.0)
 					
 					if _mario.forward_velocity >= 38.0:
 						_mario.play_mario_sound(_mario.SOUND_DOH)
 						_fsm.get_node_by_state("air knockback").dir = -1
-						return "air knockback"
+						_fsm.change_state("air knockback")
 					else:
 						if _mario.forward_velocity > 8.0:
 							_mario.set_forward_velocity(-8.0)
 						
-						return "soft bonk" # set_mario_action(m, ACT_SOFT_BONK, 0)
+						_fsm.change_state("soft bonk") # set_mario_action(m, ACT_SOFT_BONK, 0)
 			else:
 				_mario.set_forward_velocity(0.0) # This line is preventing pu movements
 		AIR_STEP_GRABBED_LEDGE:
-			return "ledge grab"
+			_fsm.change_state("ledge grab")
+		AIR_STEP_GRABBED_CEILING:
+			_fsm.change_state("start hanging")
             
 func action_knockback(kb_strength : int, speed : float):
 	_mario.set_forward_velocity(speed)
@@ -269,9 +274,9 @@ func action_knockback(kb_strength : int, speed : float):
 			
 			if kb_state.knockback_strength == 0:
 				_mario.play_anim("mario-freefall-land")
-				return "landing"
+				_fsm.change_state("landing")
 			else:
-				return "ground knockback"
+				_fsm.change_state("ground knockback")
 			
 		AIR_STEP_HIT_WALL:
 			_mario.bonk_reflection(false)

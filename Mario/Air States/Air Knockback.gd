@@ -19,10 +19,7 @@ func _update(delta : float):
 			return "wall kick"
 		wall_kick_timer -= 1
 	
-	var action = action_knockback(2 * sign(dir), 16.0 * sign(dir))
-	if action and action == "landing":
-		_mario.play_mario_sound(_mario.SOUND_OOF)
-	return action
+	action_knockback(2 * sign(dir), 16.0 * sign(dir))
 
 func _exit() -> void:
 	wall_kick_timer = 0

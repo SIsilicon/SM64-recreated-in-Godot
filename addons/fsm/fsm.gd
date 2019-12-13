@@ -92,7 +92,7 @@ func _ready():
 			data.node[PROPERTY_ROOT] = get_node(ROOT_NODE)
 			print (get_node(ROOT_NODE))
 		if data.has_init:
-			data.node.call(METHOD_INIT)					
+			data.node.call(METHOD_INIT)
 		_disconnect_state(state)
 		
 	assert(_check_state_valid(INIT_STATE.to_lower()))
@@ -109,7 +109,6 @@ func _update(delta):
 		return
 	if (next_state_manual != null):
 		_change_state(next_state_manual, "M")
-		next_state_manual = null
 		return
 	var data = states[active_state]
 	if data.has_update:
@@ -127,17 +126,23 @@ func _change_state(new_state_name, state_change_type):
 	assert(_check_state_valid(new_state_name))
 	if (state_change_type == null):
 		state_change_type = "M"
+	
 	if new_state_name == active_state:
 		if (LOG_STATE):
 			if states[active_state].has_prev_state_property:
 				states[active_state].node[PROPERTY_PREVIOUS_STATE] = active_state
 			print("%s -> %s (%s)" % [new_state_name, new_state_name, state_change_type])
+		next_state_manual = null
 		return
+	
+	## Edit: functions names can't have spaces, but the names do.
+	## Names will have their spaces replaced with hyphens.
+	
 	state_changing_now = true
 	var from_data = states[active_state]
 	var to_data = states[new_state_name]
 	if from_data.to_states.has(new_state_name):
-		from_data.node.call(METHOD_PREFIX_TO+new_state_name)
+		from_data.node.call(METHOD_PREFIX_TO+new_state_name.replace(" ", "_")) # Edited
 	if from_data.has_exit:
 		from_data.node.call(METHOD_EXIT)
 	_disconnect_state(active_state)
@@ -147,13 +152,14 @@ func _change_state(new_state_name, state_change_type):
 	if to_data.has_enter:
 		to_data.node.call(METHOD_ENTER)
 	if to_data.from_states.has(active_state):
-		to_data.node.call(METHOD_PREFIX_FROM+active_state)
+		to_data.node.call(METHOD_PREFIX_FROM+active_state.replace(" ", "_")) # Edited
 	var prev_state = active_state
 	active_state = new_state_name
 	emit_signal("state_change", new_state_name)
 	if (LOG_STATE):
 		print("%s -> %s (%s)" % [prev_state, new_state_name, state_change_type])
 	state_changing_now = false
+	next_state_manual = null
 	
 	## Edit
 	recursion += 1
@@ -191,11 +197,15 @@ func _init_state_from(child):
 	var to_list = []
 	var from_list = []
 	for state in state_list:
-		if child.has_method(METHOD_PREFIX_CHECK+state):
+		## Edit: Names have spaces which can't be used in functions.
+		## Spaces will be replaced with hyphens instead when testing.
+		var hyphened_state = state.replace(" ", "_")
+		
+		if child.has_method(METHOD_PREFIX_CHECK+hyphened_state):
 			check_list.append(state)
-		if child.has_method(METHOD_PREFIX_TO+state):
+		if child.has_method(METHOD_PREFIX_TO+hyphened_state):
 			to_list.append(state)
-		if child.has_method(METHOD_PREFIX_FROM+state):
+		if child.has_method(METHOD_PREFIX_FROM+hyphened_state):
 			from_list.append(state)
 	var state_data = {
 			"node": child,

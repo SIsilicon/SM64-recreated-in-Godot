@@ -24,7 +24,7 @@ func _enter() -> void:
 func _update(delta : float):
 	if not getting_up:
 		var intended_diff_yaw := Utils.angle_diff(_mario.intended_yaw, _mario.face_angle.y)
-		var has_space_for_mario := _mario.ceil_height - _mario.floor_height >= 1.6
+		var has_space_for_mario : float = _mario.ceil_height - _mario.floor_height >= 1.6
 		
 		if _mario.floor_surf.normal.y < 0.9063078:
 			return let_go_of_ledge()

@@ -1,14 +1,21 @@
 extends StationaryState
 
 var _previous_state : String
+var start_crawling : bool
 
 func _enter() -> void:
-	if _previous_state == "landing":
-		return
-	elif _previous_state == "crouch slide":
-		return
-	else:
-		_mario.play_anim("mario-start-crouch")
+	start_crawling = false
+	match _previous_state:
+		"landing":
+			return
+		"crouch slide":
+			return
+		"slide kick slide":
+			_mario.play_anim("mario-stop-slide-kick")
+		"crawling":
+			_mario.play_anim("mario-stop-crawling")
+		_:
+			_mario.play_anim("mario-start-crouch")
 
 func _update(delta : float):
 	if should_begin_sliding():
@@ -19,6 +26,13 @@ func _update(delta : float):
 	elif Input.is_action_just_pressed("jump"):
 		if Input.is_action_pressed("crouch"):
 			return set_jumping_state("backflip")
+	
+	if _mario.intended_mag > 0 and _mario.anim_player.current_animation == "mario-crouch":
+		start_crawling = true
+		_mario.play_anim("mario-start-crawling")
+	
+	if _mario.anim_at_end() and start_crawling:
+		return "crawling"
 	
 	stationary_ground_step()
 	

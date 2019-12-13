@@ -8,7 +8,7 @@ func _enter() -> void:
 	action_timer = 0
 
 func _update(delta : float):
-	_mario.terminal_swim_speed = 160
+	_mario.terminal_swim_speed = 160.0
 	
 #    if (m->flags & MARIO_METAL_CAP) {
 #        return set_mario_action(m, ACT_METAL_WATER_FALLING, 1);

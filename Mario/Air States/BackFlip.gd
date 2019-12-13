@@ -8,7 +8,10 @@ func _enter() -> void:
 	_mario.play_mario_sound(_mario.SOUND_WA)
 
 func _update(delta : float):
-	return action_in_air("mario-landing-celebration", AIR_CHECK_FALL_DAMAGE)
+	if Input.is_action_just_pressed("crouch"):
+		return "ground pound"
+	
+	action_in_air("mario-landing-celebration", AIR_CHECK_FALL_DAMAGE)
 
 func get_flags() -> int:
 	return ACT_FLAG_AIR

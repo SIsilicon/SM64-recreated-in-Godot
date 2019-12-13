@@ -24,7 +24,7 @@ func _update(delta : float):
 	
 	match perform_ground_q_steps():
 		GROUND_STEP_LEFT_GROUND:
-			return "free falling"
+			_fsm.change_state("free falling")
 	
 	if _mario.forward_velocity >= 18:
 		_mario.play_anim("mario-braking")
@@ -32,9 +32,9 @@ func _update(delta : float):
 		_mario.play_anim("mario-turning")
 		if _mario.anim_at_end():
 			if _mario.forward_velocity >= 18:
-				return begin_walking_state(-_mario.forward_velocity, "running")
+				begin_walking_state(-_mario.forward_velocity, "running")
 			else:
-				return begin_walking_state(8, "running")
+				begin_walking_state(8, "running")
 
 func get_flags() -> int:
 	return ACT_FLAG_MOVING

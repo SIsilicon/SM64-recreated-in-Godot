@@ -6,7 +6,7 @@ enum {GROUND_STEP_NONE, GROUND_STEP_HIT_WALL_STOP_QSTEPS, GROUND_STEP_HIT_WALL_C
 func apply_slope_accel() -> void:
 	var slope_accel := 0.0
 	
-	var floor_surf := _mario.floor_surf
+	var floor_surf : Surface = _mario.floor_surf
 	var steepness := sqrt(floor_surf.normal.x * floor_surf.normal.x + floor_surf.normal.z * floor_surf.normal.z)
 	
 	var normal_y := floor_surf.normal.y
@@ -80,7 +80,7 @@ func ground_q_step(step : Vector3) -> int:
 	var upper_wall : Surface = _mario.resolve_and_return_wall_collisions(step_dict, 0.6, 0.50)
 	step = step_dict.vec
 	var floor_dat := Collisions.find_floor(step)
-	var ceil_height := _mario.find_ceil(step, floor_dat.height)
+	var ceil_height : float = _mario.find_ceil(step, floor_dat.height)
 #	var water_level = Collisions.find_water_level(step)
 	
 	_mario.wall_surf = upper_wall
@@ -139,12 +139,12 @@ func perform_ground_q_steps() -> int:
 func begin_braking_state() -> String:
 	if _mario.forward_velocity >= 16.0 and _mario.floor_surf.normal.y >= 0.17364818:
 		return "braking"
-	
 	return "decelerating"
 
 func begin_walking_state(vel : float, state : String) -> String:
 	_mario.face_angle.y = _mario.intended_yaw
 	_mario.set_forward_velocity(vel)
+	_fsm.change_state(state)
 	return state
 
 func set_steep_jump_state() -> String:
@@ -152,7 +152,7 @@ func set_steep_jump_state() -> String:
 		#! ((s16)0x8000) has undefined behavior. Therefore, this downcast has
 		# undefined behavior if m->floorAngle >= 0.
 		_fsm.get_node_by_state("steep jump").steep_yaw = _mario.face_angle.y
-		var angle_temp := _mario.floor_angle + PI
+		var angle_temp : float = _mario.floor_angle + PI
 		var face_angle_temp = _mario.face_angle.y - angle_temp
 		
 		var y = sin(face_angle_temp) * _mario.forward_velocity
@@ -180,7 +180,10 @@ func set_jump_from_landing() -> String:
 				"jump":
 					return "double jump"
 				"double jump":
-					return "jump"
+					if _mario.forward_velocity > 20.0:
+						return "triple jump"
+					else:
+						return "jump"
 				"free falling":
 					return "double jump"
 				"air kick":
@@ -330,14 +333,15 @@ func common_sliding_movement(stop_state : String):
 		GROUND_STEP_LEFT_GROUND:
 			if _mario.forward_velocity < -50.0 or 50.0 < _mario.forward_velocity:
 				_mario.play_mario_sound(_mario.SOUND_WOOHOO)
-			return "free falling"
+			_fsm.change_state("free falling")
 		GROUND_STEP_NONE:
-			var forward_vec := _mario.velocity * sign(_mario.forward_velocity)
+			var forward_vec : Vector3 = _mario.velocity * sign(_mario.forward_velocity)
 			var right_vec := Vector3.UP.cross(forward_vec)
 			_mario.look_at(_mario.translation + _mario.floor_surf.normal.cross(right_vec), Vector3.UP)
 		GROUND_STEP_HIT_WALL:
 			if not _mario.floor_is_slippery():
-				return slide_bonk("landing", stop_state)
+				_fsm.get_node_by_state("ground knockback").knockback_strength = -2
+				_fsm.change_state(slide_bonk("ground knockback", stop_state))
 			elif _mario.wall_surf:
 				var wall_angle = atan2(_mario.wall_surf.normal.x, _mario.wall_surf.normal.z)
 				var slide_speed = sqrt(_mario.slide_vel_x * _mario.slide_vel_x + _mario.slide_vel_z * _mario.slide_vel_z)
@@ -362,7 +366,7 @@ func common_sliding_movement_with_jump(stop_state : String, jump_state : String)
 	if update_sliding(4.0):
 		return stop_state
 	
-	return common_sliding_movement(stop_state)
+	common_sliding_movement(stop_state)
 
 func check_ground_dive_or_punch():
 	if _mario.forward_velocity >= 29.0 and _mario.intended_mag > 20.0:
