@@ -49,11 +49,11 @@ func set_camera(state : String, duration := 0) -> void:
 	$Tween.interpolate_property(self, "transition", 0.0, 1.0, duration, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$Tween.start()
 
-func set_shake(shake_type : int) -> void:
-	shake = Vector2(0, 1)
-	shake_speed = 10.0
-	shake_amount = 0.06
-	shake_time = 0.7
+func set_shake(shake_dir : Vector2, shake_speed : float, shake_amount : float, shake_time : float) -> void:
+	shake = shake_dir
+	self.shake_speed = shake_speed
+	self.shake_amount = shake_amount
+	self.shake_time = shake_time
 
 func get_direction() -> Vector3:
 	return global_transform.basis.z

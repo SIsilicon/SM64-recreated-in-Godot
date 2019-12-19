@@ -27,3 +27,6 @@ func _on_body_entered(body : Node) -> void:
 			Global.coin_counter += 1
 			Global.mario.health_inc += 4
 			queue_free()
+
+func get_wall_collide_radius() -> float:
+	return $CollisionShape.shape.radius / 2.0

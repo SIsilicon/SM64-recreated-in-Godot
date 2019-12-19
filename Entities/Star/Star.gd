@@ -7,7 +7,7 @@ func _on_body_entered(body : Spatial) -> void:
 		body.get_node("FSM").change_state("star fall")
 		body.star = self
 		$AnimationPlayer.play("collect")
-		$AudioStreamPlayer3D.play()
+		$StarCollectSound.play()
 
 func set_glow_opacity(value : float) -> void:
 	glow_opacity = value

@@ -96,6 +96,8 @@ func _ready() -> void:
 		load_entities_from_file()
 	else:
 		prev_sector = Global.mario.health >> 8
+#		$"Background Music".init_song("Intro")
+#		$"Background Music".play("Intro")
 
 func _input(event : InputEvent) -> void:
 	if event is InputEventMouseButton:

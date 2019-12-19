@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mario-die.wav-7ca37f0e3bd93e02f44f28b7ad4a743e.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Mario Voices/mario-die.wav"
+dest_files=[ "res://.import/mario-die.wav-7ca37f0e3bd93e02f44f28b7ad4a743e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

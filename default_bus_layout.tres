@@ -1,16 +1,41 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=2]
+[gd_resource type="AudioBusLayout" load_steps=3 format=2]
 
-[sub_resource type="AudioEffectHighPassFilter" id=1]
+[sub_resource type="AudioEffectReverb" id=3]
+resource_name = "Reverb"
+room_size = 0.32
+hipass = 0.15
+
+[sub_resource type="AudioEffectHighPassFilter" id=2]
 resource_name = "HighPassFilter"
 cutoff_hz = 1298.3
 
 [resource]
 bus/0/volume_db = 11.9
-bus/1/name = "Mario"
+bus/1/name = "Level"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = 0.0
 bus/1/send = "Master"
-bus/1/effect/0/effect = SubResource( 1 )
+bus/1/effect/0/effect = SubResource( 3 )
 bus/1/effect/0/enabled = true
+bus/2/name = "Mario"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = "Level"
+bus/2/effect/0/effect = SubResource( 2 )
+bus/2/effect/0/enabled = true
+bus/3/name = "Music"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -15.0
+bus/3/send = "Level"
+bus/4/name = "SFX"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = 0.0
+bus/4/send = "Level"

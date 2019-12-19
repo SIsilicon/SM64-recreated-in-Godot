@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mario-whoa.wav-7087f1cc92be3504da39ea58cd27688e.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Mario Voices/mario-whoa.wav"
+dest_files=[ "res://.import/mario-whoa.wav-7087f1cc92be3504da39ea58cd27688e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

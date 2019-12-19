@@ -1,55 +1,64 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=62 format=2]
 
-[ext_resource path="res://Nintendo 64 - Super Mario 64 - Mario/Mario.glb" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Images/Mario/Mario.glb" type="PackedScene" id=1]
 [ext_resource path="res://Mario/Mario.gd" type="Script" id=2]
-[ext_resource path="res://Mario/Sounds/mario-haha.wav" type="AudioStream" id=3]
-[ext_resource path="res://slide2.wav" type="AudioStream" id=4]
-[ext_resource path="res://addons/fsm/fsm.gd" type="Script" id=5]
-[ext_resource path="res://addons/fsm/icon.png" type="Texture" id=6]
-[ext_resource path="res://Mario/Ground States/Idle.gd" type="Script" id=7]
-[ext_resource path="res://Mario/Ground States/Ledge Grab.gd" type="Script" id=8]
-[ext_resource path="res://Mario/Ground States/Star Dance.gd" type="Script" id=9]
-[ext_resource path="res://Mario/Ground States/Crouching.gd" type="Script" id=10]
-[ext_resource path="res://Mario/Ground States/Death.gd" type="Script" id=11]
-[ext_resource path="res://Mario/Ground States/Running.gd" type="Script" id=12]
-[ext_resource path="res://Mario/Ground States/Braking.gd" type="Script" id=13]
-[ext_resource path="res://Mario/Ground States/Turning.gd" type="Script" id=14]
-[ext_resource path="res://Mario/Ground States/Finish Turning.gd" type="Script" id=15]
-[ext_resource path="res://Mario/Ground States/Landing.gd" type="Script" id=16]
-[ext_resource path="res://Mario/Ground States/Decelerating.gd" type="Script" id=17]
-[ext_resource path="res://Mario/Ground States/Ground Knockback.gd" type="Script" id=18]
-[ext_resource path="res://Mario/Ground States/Punch.gd" type="Script" id=19]
-[ext_resource path="res://Mario/Ground States/Sliding.gd" type="Script" id=20]
-[ext_resource path="res://Mario/Ground States/Crouch Slide.gd" type="Script" id=21]
-[ext_resource path="res://Mario/Ground States/Slide Kick Slide.gd" type="Script" id=22]
-[ext_resource path="res://Mario/Ground States/Crawling.gd" type="Script" id=23]
-[ext_resource path="res://Mario/Air States/Jump.gd" type="Script" id=24]
-[ext_resource path="res://Mario/Air States/Double Jump.gd" type="Script" id=25]
-[ext_resource path="res://Mario/Air States/Triple Jump.gd" type="Script" id=26]
-[ext_resource path="res://Mario/Air States/Side Flip.gd" type="Script" id=27]
-[ext_resource path="res://Mario/Air States/BackFlip.gd" type="Script" id=28]
-[ext_resource path="res://Mario/Air States/Free Falling.gd" type="Script" id=29]
-[ext_resource path="res://Mario/Air States/Air Knockback.gd" type="Script" id=30]
-[ext_resource path="res://Mario/Air States/Longjump.gd" type="Script" id=31]
-[ext_resource path="res://Mario/Air States/Wall Kick.gd" type="Script" id=32]
-[ext_resource path="res://Mario/Air States/Soft Bonk.gd" type="Script" id=33]
-[ext_resource path="res://Mario/Air States/Dive.gd" type="Script" id=34]
-[ext_resource path="res://Mario/Air States/Steep jump.gd" type="Script" id=35]
-[ext_resource path="res://Mario/Air States/Rollout.gd" type="Script" id=36]
-[ext_resource path="res://Mario/Air States/Air Kick.gd" type="Script" id=37]
-[ext_resource path="res://Mario/Air States/Water Jump.gd" type="Script" id=38]
-[ext_resource path="res://Mario/Air States/Ground Pound.gd" type="Script" id=39]
-[ext_resource path="res://Mario/Air States/Slide Kick.gd" type="Script" id=40]
-[ext_resource path="res://Mario/Air States/Star Fall.gd" type="Script" id=41]
-[ext_resource path="res://Mario/Water States/Water Plunge.gd" type="Script" id=42]
-[ext_resource path="res://Mario/Water States/Water Idle.gd" type="Script" id=43]
-[ext_resource path="res://Mario/Water States/Breaststroke.gd" type="Script" id=44]
-[ext_resource path="res://Mario/Water States/Flutter Kick.gd" type="Script" id=45]
-[ext_resource path="res://Mario/Water States/Swimming End.gd" type="Script" id=46]
-[ext_resource path="res://Mario/Water States/Water Punch.gd" type="Script" id=47]
-[ext_resource path="res://Mario/Hanging States/Hanging.gd" type="Script" id=48]
-[ext_resource path="res://Mario/Hanging States/Start Hanging.gd" type="Script" id=49]
-[ext_resource path="res://Mario/Hanging States/Hang Moving.gd" type="Script" id=50]
+[ext_resource path="res://Assets/Images/Mario/Mario/Shoes_64.material" type="Material" id=3]
+[ext_resource path="res://Assets/Images/Mario/Mario/Overalls_64.material" type="Material" id=4]
+[ext_resource path="res://Assets/Images/Mario/Mario/Gloves_64.material" type="Material" id=5]
+[ext_resource path="res://Assets/Images/Mario/Mario/Shirt_Cap_64.material" type="Material" id=6]
+[ext_resource path="res://Assets/Images/Mario/Mario/Buttons_64.material" type="Material" id=7]
+[ext_resource path="res://Assets/Images/Mario/Mario/Hair_Piece_64.material" type="Material" id=8]
+[ext_resource path="res://Assets/Images/Mario/Mario/Skin_64.material" type="Material" id=9]
+[ext_resource path="res://Assets/Images/Mario/Mario/Eyes_64.material" type="Material" id=10]
+[ext_resource path="res://Assets/Images/Mario/Mario/Moustache_64.material" type="Material" id=11]
+[ext_resource path="res://Assets/Sounds/Mario Voices/mario-haha.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sounds/slide2.wav" type="AudioStream" id=13]
+[ext_resource path="res://addons/fsm/fsm.gd" type="Script" id=14]
+[ext_resource path="res://addons/fsm/icon.png" type="Texture" id=15]
+[ext_resource path="res://Mario/Ground States/Idle.gd" type="Script" id=16]
+[ext_resource path="res://Mario/Ground States/Ledge Grab.gd" type="Script" id=17]
+[ext_resource path="res://Mario/Ground States/Star Dance.gd" type="Script" id=18]
+[ext_resource path="res://Mario/Ground States/Crouching.gd" type="Script" id=19]
+[ext_resource path="res://Mario/Ground States/Death.gd" type="Script" id=20]
+[ext_resource path="res://Mario/Ground States/Running.gd" type="Script" id=21]
+[ext_resource path="res://Mario/Ground States/Braking.gd" type="Script" id=22]
+[ext_resource path="res://Mario/Ground States/Turning.gd" type="Script" id=23]
+[ext_resource path="res://Mario/Ground States/Finish Turning.gd" type="Script" id=24]
+[ext_resource path="res://Mario/Ground States/Landing.gd" type="Script" id=25]
+[ext_resource path="res://Mario/Ground States/Decelerating.gd" type="Script" id=26]
+[ext_resource path="res://Mario/Ground States/Ground Knockback.gd" type="Script" id=27]
+[ext_resource path="res://Mario/Ground States/Punch.gd" type="Script" id=28]
+[ext_resource path="res://Mario/Ground States/Sliding.gd" type="Script" id=29]
+[ext_resource path="res://Mario/Ground States/Crouch Slide.gd" type="Script" id=30]
+[ext_resource path="res://Mario/Ground States/Slide Kick Slide.gd" type="Script" id=31]
+[ext_resource path="res://Mario/Ground States/Crawling.gd" type="Script" id=32]
+[ext_resource path="res://Mario/Air States/Jump.gd" type="Script" id=33]
+[ext_resource path="res://Mario/Air States/Double Jump.gd" type="Script" id=34]
+[ext_resource path="res://Mario/Air States/Triple Jump.gd" type="Script" id=35]
+[ext_resource path="res://Mario/Air States/Side Flip.gd" type="Script" id=36]
+[ext_resource path="res://Mario/Air States/BackFlip.gd" type="Script" id=37]
+[ext_resource path="res://Mario/Air States/Free Falling.gd" type="Script" id=38]
+[ext_resource path="res://Mario/Air States/Air Knockback.gd" type="Script" id=39]
+[ext_resource path="res://Mario/Air States/Longjump.gd" type="Script" id=40]
+[ext_resource path="res://Mario/Air States/Wall Kick.gd" type="Script" id=41]
+[ext_resource path="res://Mario/Air States/Soft Bonk.gd" type="Script" id=42]
+[ext_resource path="res://Mario/Air States/Dive.gd" type="Script" id=43]
+[ext_resource path="res://Mario/Air States/Steep jump.gd" type="Script" id=44]
+[ext_resource path="res://Mario/Air States/Rollout.gd" type="Script" id=45]
+[ext_resource path="res://Mario/Air States/Air Kick.gd" type="Script" id=46]
+[ext_resource path="res://Mario/Air States/Water Jump.gd" type="Script" id=47]
+[ext_resource path="res://Mario/Air States/Ground Pound.gd" type="Script" id=48]
+[ext_resource path="res://Mario/Air States/Slide Kick.gd" type="Script" id=49]
+[ext_resource path="res://Mario/Air States/Star Fall.gd" type="Script" id=50]
+[ext_resource path="res://Mario/Water States/Water Plunge.gd" type="Script" id=51]
+[ext_resource path="res://Mario/Water States/Water Idle.gd" type="Script" id=52]
+[ext_resource path="res://Mario/Water States/Breaststroke.gd" type="Script" id=53]
+[ext_resource path="res://Mario/Water States/Flutter Kick.gd" type="Script" id=54]
+[ext_resource path="res://Mario/Water States/Swimming End.gd" type="Script" id=55]
+[ext_resource path="res://Mario/Water States/Water Punch.gd" type="Script" id=56]
+[ext_resource path="res://Mario/Hanging States/Hanging.gd" type="Script" id=57]
+[ext_resource path="res://Mario/Hanging States/Start Hanging.gd" type="Script" id=58]
+[ext_resource path="res://Mario/Hanging States/Hang Moving.gd" type="Script" id=59]
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.4
@@ -57,14 +66,38 @@ height = 1.6
 
 [sub_resource type="Animation" id=2]
 step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Mario-rig:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 1, 0.62, 1 ), Vector3( 1, 0.84, 1 ), Vector3( 1, 0.42, 1 ), Vector3( 1, 0.67, 1 ), Vector3( 1, 0.4, 1 ) ]
+}
 
 [node name="Mario" instance=ExtResource( 1 )]
 collision_layer = 4
 collision_mask = 11
 script = ExtResource( 2 )
 
+[node name="Mario-rig" parent="." index="0"]
+editor/display_folded = true
+
 [node name="Mario 64-body" parent="Mario-rig" index="0"]
 visible = false
+material/0 = ExtResource( 3 )
+material/1 = ExtResource( 4 )
+material/2 = ExtResource( 5 )
+material/3 = ExtResource( 6 )
+material/4 = ExtResource( 7 )
+material/5 = ExtResource( 8 )
+material/6 = ExtResource( 9 )
+material/7 = ExtResource( 10 )
+material/8 = ExtResource( 11 )
 
 [node name="Mario 64-cap-hair" parent="Mario-rig" index="1"]
 visible = false
@@ -95,15 +128,15 @@ visible = false
 
 [node name="VoicePlayer" type="AudioStreamPlayer3D" parent="." index="3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.943568, 0.059762 )
-stream = ExtResource( 3 )
+stream = ExtResource( 12 )
 unit_db = 2.0
 max_db = -8.0
 bus = "Mario"
 
 [node name="SlideSound" type="AudioStreamPlayer3D" parent="." index="4"]
-stream = ExtResource( 4 )
+stream = ExtResource( 13 )
 max_db = 1.0
-pitch_scale = 0.9
+bus = "SFX"
 doppler_tracking = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="." index="5"]
@@ -111,160 +144,159 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 shape = SubResource( 1 )
 
 [node name="SquishAnimation" type="AnimationPlayer" parent="." index="6"]
-playback_process_mode = 2
 anims/Squish = SubResource( 2 )
 
 [node name="FSM" type="Node" parent="." index="7"]
-script = ExtResource( 5 )
+editor/display_folded = true
+script = ExtResource( 14 )
 __meta__ = {
-"_editor_icon": ExtResource( 6 )
+"_editor_icon": ExtResource( 15 )
 }
 INIT_STATE = "idle"
 PROPERTY_ROOT = "_mario"
-LOG_STATE = true
 
 [node name="Idle" type="Node" parent="FSM" index="0"]
-script = ExtResource( 7 )
+script = ExtResource( 16 )
 
 [node name="Ledge Grab" type="Node" parent="FSM" index="1"]
-script = ExtResource( 8 )
+script = ExtResource( 17 )
 
 [node name="Star Dance" type="Node" parent="FSM" index="2"]
-script = ExtResource( 9 )
+script = ExtResource( 18 )
 
 [node name="Crouching" type="Node" parent="FSM" index="3"]
-script = ExtResource( 10 )
+script = ExtResource( 19 )
 
 [node name="Death" type="Node" parent="FSM" index="4"]
-script = ExtResource( 11 )
+script = ExtResource( 20 )
 
 [node name="Ground States" type="Node" parent="FSM" index="5"]
 editor/display_folded = true
 
 [node name="Running" type="Node" parent="FSM/Ground States" index="0"]
-script = ExtResource( 12 )
-
-[node name="Braking" type="Node" parent="FSM/Ground States" index="1"]
-script = ExtResource( 13 )
-
-[node name="Turning" type="Node" parent="FSM/Ground States" index="2"]
-script = ExtResource( 14 )
-
-[node name="Finish Turning" type="Node" parent="FSM/Ground States" index="3"]
-script = ExtResource( 15 )
-
-[node name="Landing" type="Node" parent="FSM/Ground States" index="4"]
-script = ExtResource( 16 )
-
-[node name="Decelerating" type="Node" parent="FSM/Ground States" index="5"]
-script = ExtResource( 17 )
-
-[node name="Ground Knockback" type="Node" parent="FSM/Ground States" index="6"]
-script = ExtResource( 18 )
-
-[node name="Punch" type="Node" parent="FSM/Ground States" index="7"]
-script = ExtResource( 19 )
-
-[node name="Sliding" type="Node" parent="FSM/Ground States" index="8"]
-script = ExtResource( 20 )
-
-[node name="Crouch Slide" type="Node" parent="FSM/Ground States" index="9"]
 script = ExtResource( 21 )
 
-[node name="Slide Kick Slide" type="Node" parent="FSM/Ground States" index="10"]
+[node name="Braking" type="Node" parent="FSM/Ground States" index="1"]
 script = ExtResource( 22 )
 
-[node name="Crawling" type="Node" parent="FSM/Ground States" index="11"]
+[node name="Turning" type="Node" parent="FSM/Ground States" index="2"]
 script = ExtResource( 23 )
+
+[node name="Finish Turning" type="Node" parent="FSM/Ground States" index="3"]
+script = ExtResource( 24 )
+
+[node name="Landing" type="Node" parent="FSM/Ground States" index="4"]
+script = ExtResource( 25 )
+
+[node name="Decelerating" type="Node" parent="FSM/Ground States" index="5"]
+script = ExtResource( 26 )
+
+[node name="Ground Knockback" type="Node" parent="FSM/Ground States" index="6"]
+script = ExtResource( 27 )
+
+[node name="Punch" type="Node" parent="FSM/Ground States" index="7"]
+script = ExtResource( 28 )
+
+[node name="Sliding" type="Node" parent="FSM/Ground States" index="8"]
+script = ExtResource( 29 )
+
+[node name="Crouch Slide" type="Node" parent="FSM/Ground States" index="9"]
+script = ExtResource( 30 )
+
+[node name="Slide Kick Slide" type="Node" parent="FSM/Ground States" index="10"]
+script = ExtResource( 31 )
+
+[node name="Crawling" type="Node" parent="FSM/Ground States" index="11"]
+script = ExtResource( 32 )
 
 [node name="Air States" type="Node" parent="FSM" index="6"]
 
 [node name="Jump" type="Node" parent="FSM/Air States" index="0"]
-script = ExtResource( 24 )
-
-[node name="Double Jump" type="Node" parent="FSM/Air States" index="1"]
-script = ExtResource( 25 )
-
-[node name="Triple Jump" type="Node" parent="FSM/Air States" index="2"]
-script = ExtResource( 26 )
-
-[node name="SideFlip" type="Node" parent="FSM/Air States" index="3"]
-script = ExtResource( 27 )
-
-[node name="BackFlip" type="Node" parent="FSM/Air States" index="4"]
-script = ExtResource( 28 )
-
-[node name="Free Falling" type="Node" parent="FSM/Air States" index="5"]
-script = ExtResource( 29 )
-
-[node name="Air Knockback" type="Node" parent="FSM/Air States" index="6"]
-script = ExtResource( 30 )
-
-[node name="Long Jump" type="Node" parent="FSM/Air States" index="7"]
-script = ExtResource( 31 )
-
-[node name="Wall Kick" type="Node" parent="FSM/Air States" index="8"]
-script = ExtResource( 32 )
-
-[node name="Soft Bonk" type="Node" parent="FSM/Air States" index="9"]
 script = ExtResource( 33 )
 
-[node name="Dive" type="Node" parent="FSM/Air States" index="10"]
+[node name="Double Jump" type="Node" parent="FSM/Air States" index="1"]
 script = ExtResource( 34 )
 
-[node name="Steep Jump" type="Node" parent="FSM/Air States" index="11"]
+[node name="Triple Jump" type="Node" parent="FSM/Air States" index="2"]
 script = ExtResource( 35 )
 
-[node name="Rollout" type="Node" parent="FSM/Air States" index="12"]
+[node name="SideFlip" type="Node" parent="FSM/Air States" index="3"]
 script = ExtResource( 36 )
 
-[node name="Air Kick" type="Node" parent="FSM/Air States" index="13"]
+[node name="BackFlip" type="Node" parent="FSM/Air States" index="4"]
 script = ExtResource( 37 )
 
-[node name="Water Jump" type="Node" parent="FSM/Air States" index="14"]
+[node name="Free Falling" type="Node" parent="FSM/Air States" index="5"]
 script = ExtResource( 38 )
 
-[node name="Ground Pound" type="Node" parent="FSM/Air States" index="15"]
+[node name="Air Knockback" type="Node" parent="FSM/Air States" index="6"]
 script = ExtResource( 39 )
 
-[node name="Slide Kick" type="Node" parent="FSM/Air States" index="16"]
+[node name="Long Jump" type="Node" parent="FSM/Air States" index="7"]
 script = ExtResource( 40 )
 
-[node name="Star Fall" type="Node" parent="FSM/Air States" index="17"]
+[node name="Wall Kick" type="Node" parent="FSM/Air States" index="8"]
 script = ExtResource( 41 )
+
+[node name="Soft Bonk" type="Node" parent="FSM/Air States" index="9"]
+script = ExtResource( 42 )
+
+[node name="Dive" type="Node" parent="FSM/Air States" index="10"]
+script = ExtResource( 43 )
+
+[node name="Steep Jump" type="Node" parent="FSM/Air States" index="11"]
+script = ExtResource( 44 )
+
+[node name="Rollout" type="Node" parent="FSM/Air States" index="12"]
+script = ExtResource( 45 )
+
+[node name="Air Kick" type="Node" parent="FSM/Air States" index="13"]
+script = ExtResource( 46 )
+
+[node name="Water Jump" type="Node" parent="FSM/Air States" index="14"]
+script = ExtResource( 47 )
+
+[node name="Ground Pound" type="Node" parent="FSM/Air States" index="15"]
+script = ExtResource( 48 )
+
+[node name="Slide Kick" type="Node" parent="FSM/Air States" index="16"]
+script = ExtResource( 49 )
+
+[node name="Star Fall" type="Node" parent="FSM/Air States" index="17"]
+script = ExtResource( 50 )
 
 [node name="Water States" type="Node" parent="FSM" index="7"]
 editor/display_folded = true
 
 [node name="Water Plunge" type="Node" parent="FSM/Water States" index="0"]
-script = ExtResource( 42 )
+script = ExtResource( 51 )
 
 [node name="Water Idle" type="Node" parent="FSM/Water States" index="1"]
-script = ExtResource( 43 )
+script = ExtResource( 52 )
 
 [node name="Breaststroke" type="Node" parent="FSM/Water States" index="2"]
-script = ExtResource( 44 )
+script = ExtResource( 53 )
 
 [node name="Flutter Kick" type="Node" parent="FSM/Water States" index="3"]
-script = ExtResource( 45 )
+script = ExtResource( 54 )
 
 [node name="Swimming End" type="Node" parent="FSM/Water States" index="4"]
-script = ExtResource( 46 )
+script = ExtResource( 55 )
 
 [node name="Water Punch" type="Node" parent="FSM/Water States" index="5"]
-script = ExtResource( 47 )
+script = ExtResource( 56 )
 
 [node name="Hanging States" type="Node" parent="FSM" index="8"]
 editor/display_folded = true
 
 [node name="Hanging" type="Node" parent="FSM/Hanging States" index="0"]
-script = ExtResource( 48 )
+script = ExtResource( 57 )
 
 [node name="Start Hanging" type="Node" parent="FSM/Hanging States" index="1"]
-script = ExtResource( 49 )
+script = ExtResource( 58 )
 
 [node name="Hang Moving" type="Node" parent="FSM/Hanging States" index="2"]
-script = ExtResource( 50 )
+script = ExtResource( 59 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="." index="8"]
 transform = Transform( 0.598904, -0.549152, 0.582878, 0, 0.72785, 0.685736, -0.800821, -0.41069, 0.435912, 0, 6.30777, 0 )

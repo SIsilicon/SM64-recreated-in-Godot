@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mario-haha.wav-9a7809d4bde973ba4e4eb1ee0f2bae08.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Mario Voices/mario-haha.wav"
+dest_files=[ "res://.import/mario-haha.wav-9a7809d4bde973ba4e4eb1ee0f2bae08.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

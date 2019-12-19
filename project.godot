@@ -92,7 +92,7 @@ settings/fps/force_fps=30
 
 [editor_plugins]
 
-enabled=PoolStringArray( "fsm", "water_pack" )
+enabled=PoolStringArray( "fsm", "mixing-desk", "water_pack" )
 
 [importer_defaults]
 

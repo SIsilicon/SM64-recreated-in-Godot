@@ -20,7 +20,7 @@ func _update(delta : float):
 		rel_pos.y -= delta * 2.0
 	if time > 1.5 and not zooming_in:
 		_camera.unsteadiness = 1.0
-		$"../../Tween".interpolate_property(self, "rel_pos", rel_pos, rel_pos.normalized() * 2.0 + Vector3.DOWN * 0.7, 0.5, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+		$"../../Tween".interpolate_property(self, "rel_pos", rel_pos, rel_pos.normalized() * 2.0 + Vector3.DOWN * 0.4, 0.5, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 		$"../../Tween".start()
 		zooming_in = true
 	

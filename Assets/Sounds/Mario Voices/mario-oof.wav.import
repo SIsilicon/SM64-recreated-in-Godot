@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mario-oof.wav-1b1dc0e3e9f38653b0afb1618d1ed076.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Mario Voices/mario-oof.wav"
+dest_files=[ "res://.import/mario-oof.wav-1b1dc0e3e9f38653b0afb1618d1ed076.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mario-herewego.wav-44a437b4f645fb3c0890e48aa2c284c7.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Mario Voices/mario-herewego.wav"
+dest_files=[ "res://.import/mario-herewego.wav-44a437b4f645fb3c0890e48aa2c284c7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

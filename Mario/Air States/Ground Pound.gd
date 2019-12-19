@@ -33,8 +33,8 @@ func _update(delta : float):
 	else:
 		var step_result = perform_air_q_steps(0)
 		if step_result == AIR_STEP_LANDED:
-#			play_mario_heavy_landing_sound(m, SOUND_ACTION_TERRAIN_HEAVY_LANDING)
-			Global.camera.set_shake(0)
+			_mario.play_heavy_landing_sound()
+			Global.camera.set_shake(Vector2(0, 1), 10.0, 0.2, 0.5)
 			
 			check_fall_damage("landing")
 			if _fsm.next_state_manual == "landing":

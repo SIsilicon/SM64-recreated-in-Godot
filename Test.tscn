@@ -1,18 +1,20 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Test.gd" type="Script" id=1]
 [ext_resource path="res://Physics/debug_collisions.material" type="Material" id=2]
 [ext_resource path="res://CameraSystem.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Moving Platform.gd" type="Script" id=4]
-[ext_resource path="res://Mario/Mario.tscn" type="PackedScene" id=5]
-[ext_resource path="res://addons/water_pack/script/water.gd" type="Script" id=6]
-[ext_resource path="res://addons/water_pack/lake_icon.svg" type="Texture" id=7]
-[ext_resource path="res://Entities/Scuttlebug/Scuttlebug.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Entities/Coin/Coin.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Door/Door.tscn" type="PackedScene" id=10]
-[ext_resource path="res://power_meter_refill.wav" type="AudioStream" id=11]
-[ext_resource path="res://Entities/Coin/coin_collect.wav" type="AudioStream" id=12]
-[ext_resource path="res://Entities/Star/Star.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Entities/Power Block/Power Block.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Mario/Mario.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/water_pack/script/water.gd" type="Script" id=7]
+[ext_resource path="res://addons/water_pack/lake_icon.svg" type="Texture" id=8]
+[ext_resource path="res://Entities/Scuttlebug/Scuttlebug.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Entities/Coin/Coin.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Door/Door.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Assets/Sounds/power_meter_refill.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sounds/Entities/Coins/coin_collect.wav" type="AudioStream" id=13]
+[ext_resource path="res://Entities/Star/Star.tscn" type="PackedScene" id=14]
+[ext_resource path="res://HMC BGM.tscn" type="PackedScene" id=15]
 
 [sub_resource type="ArrayMesh" id=28]
 surfaces/0 = {
@@ -326,7 +328,10 @@ __meta__ = {
 [node name="CollisionShape" type="CollisionShape" parent="Surfaces/SURFACE_WOBBLING_WARP"]
 shape = SubResource( 38 )
 
-[node name="Mario" parent="." instance=ExtResource( 5 )]
+[node name="Power Block" parent="." instance=ExtResource( 5 )]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -69.7241, 24.6998, 73.9341 )
+
+[node name="Mario" parent="." instance=ExtResource( 6 )]
 transform = Transform( -0.666077, 0, 0.745884, 0, 1, 0, -0.745884, 0, -0.666077, -74.6642, 26.037, 73.6489 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -347,9 +352,9 @@ collision_layer = 64
 collision_mask = 4
 
 [node name="Water" type="Spatial" parent="Area"]
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 __meta__ = {
-"_editor_icon": ExtResource( 7 )
+"_editor_icon": ExtResource( 8 )
 }
 size = Vector2( 83.08, 112.97 )
 use_planar_reflection = false
@@ -420,54 +425,53 @@ origin_offset = Vector3( 4.637, -3.263, 9.82 )
 box_projection = true
 
 [node name="Entities" type="Spatial" parent="."]
-editor/display_folded = true
 
-[node name="Scuttlebug" parent="Entities" instance=ExtResource( 8 )]
+[node name="Scuttlebug" parent="Entities" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -63.2, 20.48, 67.74 )
 
-[node name="Scuttlebug2" parent="Entities" instance=ExtResource( 8 )]
+[node name="Scuttlebug2" parent="Entities" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -54.55, 15.36, 3.52 )
 
-[node name="Scuttlebug3" parent="Entities" instance=ExtResource( 8 )]
+[node name="Scuttlebug3" parent="Entities" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 41.6, 0.28, 72.3 )
 
-[node name="Scuttlebug4" parent="Entities" instance=ExtResource( 8 )]
+[node name="Scuttlebug4" parent="Entities" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 53.92, 0.28, 32.58 )
 
-[node name="Coin" parent="Entities" instance=ExtResource( 9 )]
+[node name="Coin" parent="Entities" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.2, 20.48, 44.44 )
 
-[node name="Coin2" parent="Entities" instance=ExtResource( 9 )]
+[node name="Coin2" parent="Entities" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.4, 20.4, 45.56 )
 
-[node name="Coin3" parent="Entities" instance=ExtResource( 9 )]
+[node name="Coin3" parent="Entities" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6, 20.4, 46.66 )
 
-[node name="Coin4" parent="Entities" instance=ExtResource( 9 )]
+[node name="Coin4" parent="Entities" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.6, 20.4, 43.38 )
 
-[node name="Coin5" parent="Entities" instance=ExtResource( 9 )]
+[node name="Coin5" parent="Entities" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2, 20.4, 42.6413 )
 
 [node name="Doors" type="Spatial" parent="."]
 editor/display_folded = true
 
-[node name="Door" parent="Doors" instance=ExtResource( 10 )]
+[node name="Door" parent="Doors" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -65.5263, 15.4172, 14.5662 )
 
-[node name="Door5" parent="Doors" instance=ExtResource( 10 )]
+[node name="Door5" parent="Doors" instance=ExtResource( 11 )]
 transform = Transform( -0.00131731, 0, -0.999999, 0, 1, 0, 0.999999, 0, -0.00131731, -48.6484, 18.4009, -75.4955 )
 
-[node name="Door6" parent="Doors" instance=ExtResource( 10 )]
+[node name="Door6" parent="Doors" instance=ExtResource( 11 )]
 transform = Transform( -0.89792, 0, -0.440159, 0, 1, 0, 0.440159, 0, -0.89792, -35.8473, 15.3748, 6.44499 )
 
-[node name="Door2" parent="Doors" instance=ExtResource( 10 )]
+[node name="Door2" parent="Doors" instance=ExtResource( 11 )]
 transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 3.56484, 20.4129, 36.6103 )
 
-[node name="Door3" parent="Doors" instance=ExtResource( 10 )]
+[node name="Door3" parent="Doors" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 38.1491, 1.92122, 8.67775 )
 
-[node name="Door4" parent="Doors" instance=ExtResource( 10 )]
+[node name="Door4" parent="Doors" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 59.1857, -1.93064, 8.67775 )
 
 [node name="GUI" type="Control" parent="."]
@@ -491,8 +495,9 @@ value = 8.0
 percent_visible = false
 
 [node name="MeterRefill" type="AudioStreamPlayer" parent="GUI/ProgressBar"]
-stream = ExtResource( 11 )
-volume_db = -18.0
+stream = ExtResource( 12 )
+volume_db = -12.0
+bus = "SFX"
 
 [node name="VSeparator" type="VSeparator" parent="GUI"]
 anchor_left = 1.0
@@ -516,20 +521,24 @@ text = "0"
 align = 2
 
 [node name="CoinSound" type="AudioStreamPlayer3D" parent="GUI/VSeparator"]
-stream = ExtResource( 12 )
+stream = ExtResource( 13 )
+bus = "SFX"
 
-[node name="Star" parent="." instance=ExtResource( 13 )]
+[node name="Star" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -65.7094, 26.8213, -15.2061 )
 
-[node name="Star2" parent="." instance=ExtResource( 13 )]
+[node name="Star2" parent="." instance=ExtResource( 14 )]
 transform = Transform( -0.0144593, 0, -0.999895, 0, 1, 0, 0.999895, 0, -0.0144593, -51.1163, 30.4776, -67.7195 )
 
-[node name="Star3" parent="." instance=ExtResource( 13 )]
+[node name="Star3" parent="." instance=ExtResource( 14 )]
 transform = Transform( -0.0144593, 0, -0.999895, 0, 1, 0, 0.999895, 0, -0.0144593, -17.6907, 23.2118, -73.8977 )
 
-[node name="Star4" parent="." instance=ExtResource( 13 )]
+[node name="Star4" parent="." instance=ExtResource( 14 )]
 transform = Transform( -0.998421, 0, -0.0561816, 0, 1, 0, 0.0561816, 0, -0.998421, -35.364, -41.487, 35.099 )
 
-[node name="Star5" parent="." instance=ExtResource( 13 )]
+[node name="Star5" parent="." instance=ExtResource( 14 )]
 transform = Transform( 0.0248157, 0, -0.999692, 0, 1, 0, 0.999692, 0, 0.0248157, 63.1073, -44.9349, 23.4715 )
+
+[node name="Background Music" parent="." instance=ExtResource( 15 )]
+autoplay = NodePath("")
 [connection signal="body_entered" from="MovingPlatform/Area" to="MovingPlatform" method="_on_Area_body_entered"]

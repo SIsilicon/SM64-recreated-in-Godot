@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/step-floor.wav-62cf72af16a637985950771a0d7cf41d.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/step-floor.wav"
+dest_files=[ "res://.import/step-floor.wav-62cf72af16a637985950771a0d7cf41d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop=false
+compress/mode=0

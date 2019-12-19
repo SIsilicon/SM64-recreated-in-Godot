@@ -172,6 +172,7 @@ func check_fall_damage(land_state : String) -> void:
 			kb_state.knockback_strength = 3 if _fsm.active_state == "dive" else -3
 			_mario.play_mario_sound(_mario.SOUND_PAIN)
 			_fsm.change_state("ground knockback")
+			return
 		elif fall_height > 11.5 and not _mario.floor_is_slippery():
 			_mario.health_dec += 8
 			_mario.squished = 30

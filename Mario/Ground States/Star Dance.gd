@@ -1,6 +1,7 @@
 extends StationaryState
 
 func _enter() -> void:
+	Global.play_star_fanfare()
 	_mario.play_anim("mario-star-dance")
 	_mario.star.get_node("AnimationPlayer").play("star dance")
 	_mario.rotation.y = Global.camera.rotation.y

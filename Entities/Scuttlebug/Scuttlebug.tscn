@@ -3,7 +3,7 @@
 [ext_resource path="res://Entities/Scuttlebug/Scuttlebug.gd" type="Script" id=1]
 [ext_resource path="res://Entities/Scuttlebug/Scuttlebug.material" type="Material" id=2]
 [ext_resource path="res://Entities/Scuttlebug/Scuttlebug_eyes.material" type="Material" id=3]
-[ext_resource path="res://Entities/spotted_by_enemy.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Sounds/Entities/spotted_by_enemy.wav" type="AudioStream" id=4]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Sphere"
@@ -598,4 +598,5 @@ shape = SubResource( 5 )
 [node name="Alert" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 4 )
 pitch_scale = 1.2
+bus = "SFX"
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

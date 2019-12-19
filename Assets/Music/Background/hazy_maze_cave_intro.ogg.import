@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/hazy_maze_cave_intro.ogg-9d94c00028b1a59eb1719d3de0fe0069.oggstr"
+
+[deps]
+
+source_file="res://Assets/Music/Background/hazy_maze_cave_intro.ogg"
+dest_files=[ "res://.import/hazy_maze_cave_intro.ogg-9d94c00028b1a59eb1719d3de0fe0069.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

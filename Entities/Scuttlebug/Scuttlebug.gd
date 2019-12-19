@@ -125,9 +125,9 @@ func die() -> void:
 		coin.translation = translation
 		get_parent().add_child(coin)
 	
-	var dead_sound = SoundParticle.new(preload("../enemy_down_1.wav"), translation)
+	var dead_sound = SoundParticle.new(preload("res://Assets/Sounds/Entities/enemy_down_1.wav"), translation)
 	get_parent().add_child(dead_sound)
-	var squash_sound = SoundParticle.new(preload("../stomp.wav"), translation)
+	var squash_sound = SoundParticle.new(preload("res://Assets/Sounds/Entities/stomp.wav"), translation)
 	get_parent().add_child(squash_sound)
 	
 	$CollisionShape.disabled = true

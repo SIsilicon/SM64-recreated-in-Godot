@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://addons/mixing-desk/music/mixing_desk_music.gd" type="Script" id=1]
+[ext_resource path="res://addons/mixing-desk/music/mdm_icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/mixing-desk/music/song.gd" type="Script" id=3]
+[ext_resource path="res://addons/mixing-desk/music/icons/song_icon.png" type="Texture" id=4]
+[ext_resource path="res://addons/mixing-desk/music/containers/core_cont.gd" type="Script" id=5]
+[ext_resource path="res://addons/mixing-desk/music/icons/core_cont_icon.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Music/Background/hazy_maze_cave_intro.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Music/Background/hazy_maze_cave_loop_base.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Assets/Music/Background/hazy_maze_cave_loop_choir.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Music/Background/hazy_maze_cave_loop_guitar.ogg" type="AudioStream" id=10]
+
+
+
+
+[node name="MixingDeskMusic" type="Node"]
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_icon": ExtResource( 2 )
+}
+play_mode = 1
+autoplay = NodePath("Intro")
+
+[node name="Intro" type="Node" parent="."]
+script = ExtResource( 3 )
+__meta__ = {
+"_editor_icon": ExtResource( 4 )
+}
+tempo = 133
+bars = 41
+beats_in_bar = 2
+transition_type = "Bar"
+
+[node name="CoreContainer" type="Node" parent="Intro"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_icon": ExtResource( 6 )
+}
+
+[node name="Intro" type="AudioStreamPlayer" parent="Intro/CoreContainer"]
+stream = ExtResource( 7 )
+
+[node name="Loop" type="Node" parent="."]
+script = ExtResource( 3 )
+__meta__ = {
+"_editor_icon": ExtResource( 4 )
+}
+tempo = 133
+bars = 48
+beats_in_bar = 4
+auto_signal_node = NodePath("..")
+auto_signal = "end"
+transition_type = "Beat"
+
+[node name="CoreContainer" type="Node" parent="Loop"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_icon": ExtResource( 6 )
+}
+
+[node name="Loop Base" type="AudioStreamPlayer" parent="Loop/CoreContainer"]
+stream = ExtResource( 8 )
+
+[node name="Loop Choir" type="AudioStreamPlayer" parent="Loop/CoreContainer"]
+stream = ExtResource( 9 )
+
+[node name="Loop Guitar" type="AudioStreamPlayer" parent="Loop/CoreContainer"]
+stream = ExtResource( 10 )

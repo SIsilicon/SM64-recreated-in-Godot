@@ -2,23 +2,23 @@ extends Spatial
 class_name Mario
 
 # Sound constants
-const SOUND_DIE = preload("Sounds/mario-die.wav")
-const SOUND_DOH = preload("Sounds/mario-doh.wav")
-const SOUND_HAHA = preload("Sounds/mario-haha.wav")
-const SOUND_HOO = preload("Sounds/mario-hoo.wav")
-const SOUND_OOF = preload("Sounds/mario-oof.wav")
-const SOUND_SCREAM = preload("Sounds/mario-scream.wav")
-const SOUND_PAIN = preload("Sounds/mario-pain.wav")
-const SOUND_WOO = preload("Sounds/mario-woo.wav")
-const SOUND_UGH = preload("Sounds/mario-ugh.wav")
-const SOUND_UNGH = preload("Sounds/mario-ungh.wav")
-const SOUND_YAHOO = preload("Sounds/mario-yahoo.wav")
-const SOUND_WOOHOO = preload("Sounds/mario-woohoo.wav")
-const SOUND_PULLUP = preload("Sounds/mario-pullup.wav")
-const SOUND_WA = preload("Sounds/mario-wa.wav")
-const SOUND_YA = preload("Sounds/mario-ya.wav")
-const SOUND_WAHA = preload("Sounds/mario-waha.wav")
-const SOUND_WHOA = preload("Sounds/mario-whoa.wav")
+const SOUND_DIE = preload("res://Assets/Sounds/Mario Voices/mario-die.wav")
+const SOUND_DOH = preload("res://Assets/Sounds/Mario Voices/mario-doh.wav")
+const SOUND_HAHA = preload("res://Assets/Sounds/Mario Voices/mario-haha.wav")
+const SOUND_HOO = preload("res://Assets/Sounds/Mario Voices/mario-hoo.wav")
+const SOUND_OOF = preload("res://Assets/Sounds/Mario Voices/mario-oof.wav")
+const SOUND_SCREAM = preload("res://Assets/Sounds/Mario Voices/mario-scream.wav")
+const SOUND_PAIN = preload("res://Assets/Sounds/Mario Voices/mario-pain.wav")
+const SOUND_WOO = preload("res://Assets/Sounds/Mario Voices/mario-woo.wav")
+const SOUND_UGH = preload("res://Assets/Sounds/Mario Voices/mario-ugh.wav")
+const SOUND_UNGH = preload("res://Assets/Sounds/Mario Voices/mario-ungh.wav")
+const SOUND_YAHOO = preload("res://Assets/Sounds/Mario Voices/mario-yahoo.wav")
+const SOUND_WOOHOO = preload("res://Assets/Sounds/Mario Voices/mario-woohoo.wav")
+const SOUND_PULLUP = preload("res://Assets/Sounds/Mario Voices/mario-pullup.wav")
+const SOUND_WA = preload("res://Assets/Sounds/Mario Voices/mario-wa.wav")
+const SOUND_YA = preload("res://Assets/Sounds/Mario Voices/mario-ya.wav")
+const SOUND_WAHA = preload("res://Assets/Sounds/Mario Voices/mario-waha.wav")
+const SOUND_WHOA = preload("res://Assets/Sounds/Mario Voices/mario-whoa.wav")
 
 # Movement variables
 var face_angle := Vector3()
@@ -496,7 +496,11 @@ func get_mario_sound_priority(sound : AudioStreamSample) -> int:
 	return 0
 
 func play_step_sound() -> void:
-	var sound = SoundParticle.new(preload("res://step-floor.wav"), translation, 0.5)
+	var sound = SoundParticle.new(preload("res://Assets/Sounds/step-floor.wav"), translation, 0.5)
+	get_tree().get_root().add_child(sound)
+
+func play_heavy_landing_sound() -> void:
+	var sound = SoundParticle.new(preload("res://Assets/Sounds/ground_pound.wav"), translation, 1.0, 0.1)
 	get_tree().get_root().add_child(sound)
 
 func start_slide_sound() -> void:
